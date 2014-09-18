@@ -1,10 +1,12 @@
+#!/bin/sh
+
 ##################################
 #
 # DNS Helper
 #
 ##################################
 
-function zju_test_and_set_up_dns() {
+zju_test_and_set_up_dns () {
     until [ -z "$1" ]
     do
         dig baidu.com @$1 +time=1 > /dev/null && echo "$1 ... ok" && echo "nameserver $1" > /etc/resolv.conf && break
