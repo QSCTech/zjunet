@@ -9,8 +9,8 @@
 BASEDIR=$(dirname $0)
 
 case "$1" in
-    config)
-        zju_config
+    user)
+        "$BASEDIR/user.sh" $2
         ;;
     ip)
         ip route show 0/0 | cut -d " " -f 3
