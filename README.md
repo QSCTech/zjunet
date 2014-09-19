@@ -21,3 +21,7 @@ Command Line Scripts for ZJU (VPN / WLAN / DNS)
 - 多拨支持（多账户负载均衡）
 
 - DNS 自动设置
+
+## Links
+
+- [Array in unix Bourne Shell](http://unix.stackexchange.com/questions/137566/array-in-unix-bourne-shell)
