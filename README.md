@@ -16,7 +16,7 @@ Command Line Scripts for ZJU (VPN / WLAN / DNS)
 
 - Arch Linux / Ubuntu 支持
 
-- 路由器支持（written in sh）
+- 路由器支持（written in Bourne Shell）
 
 - 多拨支持（多账户负载均衡）
 

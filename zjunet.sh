@@ -16,8 +16,7 @@ case "$1" in
         ip route show 0/0 | cut -d " " -f 3
         ;;
     wlan)
-        # TODO
-        zju_connect_wlan
+        "$BASEDIR/wlan.sh"
         ;;
     vpn)
         # if 10.189.xxx => is zjuwlan
