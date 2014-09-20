@@ -19,8 +19,7 @@ case "$1" in
         "$BASEDIR/wlan.sh"
         ;;
     vpn)
-        # if 10.189.xxx => is zjuwlan
-        # else set up route
+        "$BASEDIR/vpn.sh"
         ;;
     dns)
         "$BASEDIR/dns.sh"
