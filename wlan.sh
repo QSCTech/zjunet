@@ -25,10 +25,16 @@ logout() {
 
     echo "Logout: ${USERNAME}"
     RESPONSE=$(curl "https://net.zju.edu.cn/rad_online.php" -H "Content-Type: application/x-www-form-urlencoded" -d "action=auto_dm&username=${USERNAME}&password=${PASSWORD}" -s)
-    if [[ "${RESPONSE}" != "ok" ]]; then
-        echo "${RESPONSE}" >&2
-        exit 1
-    fi
+
+    case "${RESPONSE}" in
+        *ok*)
+            echo "Logout: success."
+            ;;
+        *)
+            echo "Logout: ${RESPONSE}."
+            exit 1;
+            ;;
+    esac
 }
 
 login() {
@@ -39,19 +45,25 @@ login() {
 
     echo "Login: ${USERNAME}"
     RESPONSE=$(curl "https://net.zju.edu.cn/cgi-bin/srun_portal" -H "Content-Type: application/x-www-form-urlencoded" -d "action=login&username=${USERNAME}&password=${PASSWORD}&ac_id=3&type=1&is_ldap=1&local_auth=1" -s)
-    if [[ "${RESPONSE}" = *"help.html"* || "${response}" = *"login_ok"* ]]; then
-        echo "Login successful"
-    else
-        echo "${RESPONSE}" >&2
-        exit 1
-    fi    
+
+    case "${RESPONSE}" in
+        *help.html*)
+            echo "Login: success."
+            ;;
+        *login_ok*)
+            echo "Login: success."
+            ;;
+        *)
+            echo "Login: ${RESPONSE}" >&2
+            exit 1
+            ;;
+    esac
 }
 
 BASEDIR=$(dirname $0)
 USER="${BASEDIR}/user.sh"
 
 USERNAME=$($USER get)
-
 PASSWORD=$($USER getpwd $USERNAME)
 
 case "$1" in
@@ -61,4 +73,10 @@ case "$1" in
     logout)
         logout $USERNAME $PASSWORD
         ;;
+    *)
+        echo "Usage: "
+        echo "    zjunet wlan login"
+        echo "    zjunet wlan logout"
+        ;;
 esac
+

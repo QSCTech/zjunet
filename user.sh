@@ -22,6 +22,10 @@
 DIR="$HOME/.zjunet"
 mkdir -p $DIR
 
+getall() {
+    ls -1A $DIR | xargs | tr "\n" " "
+}
+
 # dispatch
 case "$1" in
 
@@ -38,7 +42,8 @@ case "$1" in
         ;;
 
     delete)
-        read -p "USERNAME: " USERNAME
+        USERS=$(getall)
+        read -p "Delete User [ ${USERS}]: " USERNAME
         rm -i "$DIR/${USERNAME}"
         ;;
 
@@ -55,7 +60,7 @@ case "$1" in
             exit 1
         else
             if [ "${COUNT}" -gt "1" ]; then
-                USERS=$(ls -1A $DIR | xargs | tr "\n" " ")
+                USERS=$(getall)
                 read -p "Choose User [ ${USERS}]: " USERNAME
             else
                 USERNAME=$(ls -1 $DIR | head -n1)
@@ -67,7 +72,7 @@ case "$1" in
     # Get all users
     # @private
     getall)
-        ls -1A $DIR | xargs | tr "\n" " "
+        getall
         ;;
 
     # @private

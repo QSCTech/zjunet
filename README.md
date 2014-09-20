@@ -2,6 +2,12 @@
 
 Command Line Scripts for ZJU (VPN / WLAN / DNS)
 
+## Require
+
+```bash
+sudo apt-get install curl
+```
+
 ## TODO
 
 - zjunet vpn
@@ -25,3 +31,5 @@ Command Line Scripts for ZJU (VPN / WLAN / DNS)
 ## Links
 
 - [Array in unix Bourne Shell](http://unix.stackexchange.com/questions/137566/array-in-unix-bourne-shell)
+
+- [How do you tell if a string contains another string in Unix shell scripting?](http://stackoverflow.com/questions/2829613/how-do-you-tell-if-a-string-contains-another-string-in-unix-shell-scripting)

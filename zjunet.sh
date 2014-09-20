@@ -28,10 +28,10 @@ case "$1" in
         ip route show 0/0 | cut -d " " -f 3
         ;;
     wlan)
-        "${BASEDIR}/wlan.sh"
+        "${BASEDIR}/wlan.sh" $2
         ;;
     vpn)
-        "${BASEDIR}/vpn.sh"
+        "${BASEDIR}/vpn.sh" $2
         ;;
     dns)
         "${BASEDIR}/dns.sh"
