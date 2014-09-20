@@ -21,12 +21,33 @@
 # <http://www.gnu.org/licenses/>.
 
 start_xl2tpd() {
+    echo 'start xl2tpd'
 }
 
 disconnect() {
+    echo 'disconnect'
+}
+
+set_up_routes() {
+    IP=$(ip route show 0/0 | cut -d " " -f 3)
+
+    case "$IP" in
+        10.189.*)
+            return
+            ;;
+        10.171.*)
+            return
+            ;;
+    esac
+
+    # set up routes here
+    # todo
 }
 
 connect() {
+    disconnect
+    # todo
+    set_up_routes
 }
 
 
