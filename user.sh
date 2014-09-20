@@ -24,26 +24,55 @@ mkdir -p $DIR
 
 # dispatch
 case "$1" in
+
     add)
-        echo "USERNAME: "
-        read USERNAME
-        echo "PASSWORD: "
-        read PASSWORD
-        echo $PASSWORD > "$DIR/$USERNAME"
+        read -p "USERNAME: " USERNAME
+        read -p "PASSWORD: " PASSWORD
+        echo $PASSWORD > "$DIR/${USERNAME}"
         ;;
+
     edit)
-        echo "USERNAME: "
-        read USERNAME
-        echo "PASSWORD: "
-        read PASSWORD
-        echo $PASSWORD > "$DIR/$USERNAME"
+        read -p "USERNAME: " USERNAME
+        read -p "PASSWORD: " PASSWORD
+        echo $PASSWORD > "$DIR/${USERNAME}"
         ;;
+
     delete)
-        echo "USERNAME: "
-        read USERNAME
-        rm -i "$DIR/$USERNAME"
+        read -p "USERNAME: " USERNAME
+        rm -i "$DIR/${USERNAME}"
         ;;
+
     list)
-        ls $DIR
+        ls -1A $DIR
+        ;;
+
+    # Get a user
+    # @private
+    get)
+        COUNT=$(ls -1A $DIR | wc -l)
+        if [ "${COUNT}" -eq "0" ]; then
+            echo "No user found. Use 'zjunet user add' to add a user."
+            exit 1
+        else
+            if [ "${COUNT}" -gt "1" ]; then
+                USERS=$(ls -1A $DIR | xargs | tr "\n" " ")
+                read -p "Choose User [ ${USERS}]: " USERNAME
+            else
+                USERNAME=$(ls -1 $DIR | head -n1)
+            fi
+            echo $USERNAME
+        fi
+        ;;
+
+    # Get all users
+    # @private
+    getall)
+        ls -1A $DIR | xargs | tr "\n" " "
+        ;;
+
+    # @private
+    getpwd)
+        USERNAME=$2
+        cat "$DIR/${USERNAME}"
         ;;
 esac

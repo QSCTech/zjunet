@@ -1,4 +1,6 @@
-# wlan.sh
+#!/bin/sh
+
+# wlan.sh -- login/logout for ZJUWLAN
 #
 # Copyright (C) 2014 Zhang Hai <Dreaming.in.Code.ZH@Gmail.com>
 # Copyright (C) 2014 Zeno Zeng <zenoofzeng@gmail.com>
@@ -45,9 +47,18 @@ login() {
     fi    
 }
 
+BASEDIR=$(dirname $0)
+USER="${BASEDIR}/user.sh"
+
+USERNAME=$($USER get)
+
+PASSWORD=$($USER getpwd $USERNAME)
+
 case "$1" in
     login)
+        login $USERNAME $PASSWORD
         ;;
     logout)
+        logout $USERNAME $PASSWORD
         ;;
 esac
