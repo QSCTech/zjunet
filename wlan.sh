@@ -76,9 +76,6 @@ case "$1" in
         logout $USERNAME $PASSWORD
         ;;
     *)
-        echo "Usage: "
-        echo "    zjunet wlan login"
-        echo "    zjunet wlan logout"
+        ${BASEDIR}/zjunet.sh usage
         ;;
 esac
-

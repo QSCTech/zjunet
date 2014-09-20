@@ -41,7 +41,16 @@ set_up_routes() {
     esac
 
     # set up routes here
-    # todo
+
+    GW=$(ip route get $VPN_SERVER 2>/dev/null | grep via | awk '{print $3}')
+    PPP=$(ip addr show | grep ppp[0-9]: | cut "-d " -f2 | cut -d: -f1)
+    echo "[MSG] Detected gateway: $GW, PPP device: $PPP ."
+
+    ip route add  10.0.0.0/8 via $GW
+    ip route add   0.0.0.0/1 dev $PPP
+    ip route add 128.0.0.0/1 dev $PPP
+
+    # todo nexthop
 }
 
 connect() {

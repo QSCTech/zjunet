@@ -80,4 +80,7 @@ case "$1" in
         USERNAME=$2
         cat "$DIR/${USERNAME}"
         ;;
+    *)
+        ${BASEDIR}/zjunet.sh usage
+        ;;
 esac

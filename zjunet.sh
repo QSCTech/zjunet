@@ -36,4 +36,18 @@ case "$1" in
     dns)
         "${BASEDIR}/dns.sh"
         ;;
+    *)
+        cat <<EOF
+zjunet: CLI Tool (VPN/WLAN/DNS) for Zjuer
+
+Usage: zjunet [ACTION]
+
+Actions:
+        user add/edit/delete/list        User Manager
+        vpn connect(-c)/disconnect(-d)   Connect VPN
+        wlan login/logout                ZJUWLAN    
+        ip                               Show IP
+        dns                              Test and set up DNS Server
+EOF
+        ;;
 esac
