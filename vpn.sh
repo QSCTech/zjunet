@@ -1,2 +1,47 @@
-# if 10.189.xxx => is zjuwlan
-# else set up route
+#!/bin/sh
+
+# vpn.sh -- xl2tpd connect / disconnect
+#
+# Requirements: xl2tpd
+#
+# Copyright (C) 2014 Zeno Zeng <zenoofzeng@gmail.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see
+# <http://www.gnu.org/licenses/>.
+
+start_xl2tpd() {
+}
+
+disconnect() {
+}
+
+connect() {
+}
+
+
+case "$1" in
+
+    -d)
+        disconnect
+        ;;
+
+    disconnect)
+        disconnect
+        ;;
+
+    *)
+        connect
+        ;;
+
+esac

@@ -18,8 +18,6 @@ Command Line Scripts for ZJU (VPN / WLAN / DNS)
 
 - zjunet vpn
 
-- zjunet wlan
-
 ## 目标
 
 - ZJU VPN
