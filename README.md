@@ -2,11 +2,13 @@
 
 Command Line Scripts for ZJU (VPN / WLAN / DNS)
 
-## Require
+## Requirements
 
-```bash
-sudo apt-get install curl
-```
+### wlan
+
+- curl
+
+- xl2tpd
 
 ## TODO
 

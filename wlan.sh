@@ -2,6 +2,8 @@
 
 # wlan.sh -- login/logout for ZJUWLAN
 #
+# Requirements: curl, iconv
+#
 # Copyright (C) 2014 Zhang Hai <Dreaming.in.Code.ZH@Gmail.com>
 # Copyright (C) 2014 Zeno Zeng <zenoofzeng@gmail.com>
 #
@@ -24,14 +26,14 @@ logout() {
     PASSWORD=$2
 
     echo "Logout: ${USERNAME}"
-    RESPONSE=$(curl "https://net.zju.edu.cn/rad_online.php" -H "Content-Type: application/x-www-form-urlencoded" -d "action=auto_dm&username=${USERNAME}&password=${PASSWORD}" -s)
+    RESPONSE=$(curl "https://net.zju.edu.cn/rad_online.php" -H "Content-Type: application/x-www-form-urlencoded" -d "action=auto_dm&username=${USERNAME}&password=${PASSWORD}" -s | iconv -c -f gbk -t utf8)
 
     case "${RESPONSE}" in
         *ok*)
             echo "Logout: success."
             ;;
         *)
-            echo "Logout: ${RESPONSE}."
+            echo "Logout: ${RESPONSE}"
             exit 1;
             ;;
     esac
@@ -44,7 +46,7 @@ login() {
     logout $USERNAME $PASSWORD
 
     echo "Login: ${USERNAME}"
-    RESPONSE=$(curl "https://net.zju.edu.cn/cgi-bin/srun_portal" -H "Content-Type: application/x-www-form-urlencoded" -d "action=login&username=${USERNAME}&password=${PASSWORD}&ac_id=3&type=1&is_ldap=1&local_auth=1" -s)
+    RESPONSE=$(curl "https://net.zju.edu.cn/cgi-bin/srun_portal" -H "Content-Type: application/x-www-form-urlencoded" -d "action=login&username=${USERNAME}&password=${PASSWORD}&ac_id=3&type=1&is_ldap=1&local_auth=1" -s | iconv -c -f gbk -t utf8)
 
     case "${RESPONSE}" in
         *help.html*)
