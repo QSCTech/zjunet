@@ -24,9 +24,6 @@ case "$1" in
     user)
         "${BASEDIR}/user.sh" $2
         ;;
-    ip)
-        ip route show 0/0 | cut -d " " -f 3
-        ;;
     wlan)
         "${BASEDIR}/wlan.sh" $2
         ;;
@@ -46,7 +43,6 @@ Actions:
         user add/edit/delete/list/enable/disable     User Manager
         vpn connect(-c)/disconnect(-d)               Connect VPN
         wlan login/logout                            ZJUWLAN    
-        ip                                           Show IP
         dns                                          Test and set up DNS Server
 EOF
         ;;
