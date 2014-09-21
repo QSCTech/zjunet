@@ -20,13 +20,16 @@
 # <http://www.gnu.org/licenses/>.
 
 LNS="10.5.1.9"
-PPP_LOG_FILE=/var/log/zjuvpn
 L2TPD_CFG_FILE=/etc/xl2tpd/xl2tpd.conf
 
 USERNAME=$2
 PASSWORD=$3
 LAC_NAME=zju-l2tp-${USERNAME}
+PPP_LOG_FILE=/tmp/zju-l2tp-log
 PPP_OPT_FILE=/etc/ppp/peers/${LAC_NAME}
+
+mkdir -p /var/log/zjunet/
+LOG_FILE=/var/log/zjunet/${USERNAME}
 
 xl2tpd_restart() {
 
@@ -84,18 +87,17 @@ EOF
 
 connect() {
     xl2tpd-control disconnect ${LAC_NAME} > /dev/null
-    xl2tpd-control connect ${LAC_NAME} > /dev/null
+    xl2tpd-control connect ${LAC_NAME}
 
     echo -n > $PPP_LOG_FILE
 
     prev_count=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.' | wc -l)
 
-    for i in $(seq 0 60); do
+    for i in $(seq 0 30); do
 
         tail $PPP_LOG_FILE
+        tail $PPP_LOG_FILE >> $LOG_FILE
         echo -n > $PPP_LOG_FILE
-
-        echo "Try to bring up ppp."
 
         count=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.' | wc -l)
         if [ ${count} -gt ${prev_count} ]; then
@@ -108,7 +110,7 @@ connect() {
 
     echo "Fail to bring up ppp, timeout."
 
-    disconnect $1
+    xl2tpd-control disconnect ${LAC_NAME}
 }
 
 case $1 in
