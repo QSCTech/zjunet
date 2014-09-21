@@ -19,7 +19,14 @@
 # along with this program.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+LNS="10.5.1.9"
 PPP_LOG_FILE=/var/log/zjuvpn
+L2TPD_CFG_FILE=/etc/xl2tpd/xl2tpd.conf
+
+USERNAME=$2
+PASSWORD=$3
+LAC_NAME=zju-l2tp-${USERNAME}
+PPP_OPT_FILE=/etc/ppp/peers/${LAC_NAME}
 
 xl2tpd_restart() {
 
@@ -43,22 +50,14 @@ xl2tpd_restart() {
 }
 
 xl2tpd_create_lac() {
-    username=$1
-    password=$2
-
-    LNS="10.5.1.9"
-    LAC_NAME=zjuvpn-${username}
-    PPP_OPT_FILE=/etc/ppp/peers/${LAC_NAME}
-    L2TPD_CFG_FILE=/etc/xl2tpd/xl2tpd.conf
-
     touch $PPP_LOG_FILE
 
     cat > $PPP_OPT_FILE <<EOF
 noauth
 linkname $LAC_NAME
 logfile $PPP_LOG_FILE
-name $username
-password $password
+name $USERNAME
+password $PASSWORD
 EOF
     chmod 600 $PPP_OPT_FILE
 
@@ -80,15 +79,7 @@ EOF
     fi
 }
 
-disconnect() {
-    username=$1
-    LAC_NAME=zjuvpn-$1
-    xl2tpd-control disconnect ${LAC_NAME}
-}
-
 connect() {
-    username=$1
-    LAC_NAME=zjuvpn-$1
     xl2tpd-control disconnect ${LAC_NAME} > /dev/null
     xl2tpd-control connect ${LAC_NAME} > /dev/null
 
@@ -119,12 +110,12 @@ case $1 in
 
     connect)
         xl2tpd_restart
-        xl2tpd_create_lac $2 $3
-        connect $2 $3
+        xl2tpd_create_lac
+        connect
         ;;
 
     disconnect)
-        disconnect $2 $3
+        xl2tpd-control disconnect ${LAC_NAME}
         ;;
 
 esac
