@@ -39,21 +39,14 @@ set_up_routes() {
             ;;
     esac
 
-    # # set up routes here
-
-
-    # # interfaces
-    # ip addr show | grep 'inet.*ppp' | grep ' 10.5.'
-
-    # GW=$(ip route get $VPN_SERVER 2>/dev/null | grep via | awk '{print $3}')
-    # PPP=$(ip addr show | grep ppp[0-9]: | cut "-d " -f2 | cut -d: -f1)
-    # echo "[MSG] Detected gateway: $GW, PPP device: $PPP ."
-
-    # ip route add  10.0.0.0/8 via $GW
-    # ip route add   0.0.0.0/1 dev $PPP
-    # ip route add 128.0.0.0/1 dev $PPP
-
-    # todo nexthop
+    # NEXTHOP
+    ip route delete default > /dev/null
+    devs=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.' | awk '{print $7}')
+    cmd="ip route add default"
+    for dev in $devs; do
+        cmd="${cmd} nexthop dev ${dev}"
+    done
+    $cmd
 }
 
 disconnect() {
