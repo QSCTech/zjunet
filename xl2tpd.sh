@@ -109,13 +109,17 @@ connect() {
 case $1 in
 
     connect)
-        xl2tpd_restart
+        if [ ! -e $L2TPD_CONTROL_FILE ]; then
+            xl2tpd_restart
+        fi
         xl2tpd_create_lac
         connect
         ;;
 
     disconnect)
         xl2tpd-control disconnect ${LAC_NAME}
+        tail $PPP_LOG_FILE
+        echo -n > $PPP_LOG_FILE
         ;;
 
 esac
