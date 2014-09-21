@@ -21,10 +21,6 @@
 # along with this program.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-disconnect() {
-    echo 'disconnect'
-}
-
 set_up_routes() {
 
     IP=$(ip route show 0/0 | cut -d " " -f 3)
@@ -62,6 +58,15 @@ connect() {
         password=$("${BASEDIR}/user.sh" getpwd $username)
         echo "Login using ${username}"
         "${BASEDIR}/xl2tpd.sh" connect $username $password
+    done
+    set_up_routes
+}
+
+disconnect() {
+    users=$("${BASEDIR}/user.sh" getall)
+    for username in $users; do
+        echo "Logout: ${username}"
+        "${BASEDIR}/xl2tpd.sh" disconnect $username
     done
     set_up_routes
 }

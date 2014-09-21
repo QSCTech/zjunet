@@ -31,7 +31,7 @@ case "$1" in
         "${BASEDIR}/wlan.sh" $2
         ;;
     vpn)
-        "${BASEDIR}/vpn.sh" $2
+        sudo "${BASEDIR}/vpn.sh" $2
         ;;
     dns)
         "${BASEDIR}/dns.sh"
