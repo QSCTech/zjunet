@@ -21,7 +21,6 @@
 
 PPP_LOG_FILE=/var/log/zjuvpn
 
-
 xl2tpd_restart() {
 
     # for Openwrt / Debian / Ubuntu
@@ -97,9 +96,10 @@ connect() {
 
     prev_count=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.' | wc -l)
 
-    for i in $(seq 0 120); do
+    for i in $(seq 0 60); do
 
         tail $PPP_LOG_FILE
+        echo -n > $PPP_LOG_FILE
 
         count=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.' | wc -l)
         if [ ${count} -gt ${prev_count} ]; then
