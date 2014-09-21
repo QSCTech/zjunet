@@ -26,16 +26,18 @@ disconnect() {
 }
 
 set_up_routes() {
-    # IP=$(ip route show 0/0 | cut -d " " -f 3)
 
-    # case "$IP" in
-    #     10.189.*)
-    #         return
-    #         ;;
-    #     10.171.*)
-    #         return
-    #         ;;
-    # esac
+    IP=$(ip route show 0/0 | cut -d " " -f 3)
+
+    case "$IP" in
+        10.189.*)
+            ;;
+        10.171.*)
+            ;;
+        *)
+            # 内网静态路由 TODO
+            ;;
+    esac
 
     # # set up routes here
 

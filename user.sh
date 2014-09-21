@@ -19,53 +19,68 @@
 # <http://www.gnu.org/licenses/>.
 
 # init
-DIR="$HOME/.zjunet"
-mkdir -p $DIR
+users_enabled="$HOME/.zjunet/users-enabled"
+users_disabled="$HOME/.zjunet/users-disabled"
+mkdir -p $users_enabled
+mkdir -p $users_disabled
 
 getall() {
-    ls -1A $DIR | xargs | tr "\n" " "
+    ls -1A $users_enabled | xargs | tr "\n" " "
 }
 
 # dispatch
 case "$1" in
 
+    enable)
+        users=$(ls -1A $users_disabled | xargs | tr "\n" " ")
+        read -p "Enable User [ ${users}]: " username
+        mv "${users_disabled}/${username}" "${users_enabled}/${username}"
+        ;;
+
+    disable)
+        users=$(getall)
+        read -p "Disable User [ ${users}]: " username
+        mv "${users_enabled}/${username}" "${users_disabled}/${username}"
+        ;;
+
     add)
-        read -p "USERNAME: " USERNAME
-        read -p "PASSWORD: " PASSWORD
-        echo $PASSWORD > "$DIR/${USERNAME}"
+        read -p "username: " username
+        read -p "password: " password
+        echo $password > "$users_enabled/${username}"
         ;;
 
     edit)
-        read -p "USERNAME: " USERNAME
-        read -p "PASSWORD: " PASSWORD
-        echo $PASSWORD > "$DIR/${USERNAME}"
+        users=$(getall)
+        read -p "username [ ${users}]: " username
+        read -p "password: " password
+        echo $password > "$users_enabled/${username}"
         ;;
 
     delete)
-        USERS=$(getall)
-        read -p "Delete User [ ${USERS}]: " USERNAME
-        rm -i "$DIR/${USERNAME}"
+        users=$(getall)
+        read -p "Delete User [ ${users}]: " username
+        rm -i "$users_enabled/${username}"
         ;;
 
     list)
-        ls -1A $DIR
+        ls -1A $users_enabled
         ;;
 
     # Get a user
     # @private
     get)
-        COUNT=$(ls -1A $DIR | wc -l)
+        count=$(ls -1A $users_enabled | wc -l)
         if [ "${COUNT}" -eq "0" ]; then
             echo "No user found. Use 'zjunet user add' to add a user."
             exit 1
         else
-            if [ "${COUNT}" -gt "1" ]; then
-                USERS=$(getall)
-                read -p "Choose User [ ${USERS}]: " USERNAME
+            if [ "${count}" -gt "1" ]; then
+                users=$(getall)
+                read -p "Choose User [ ${users}]: " username
             else
-                USERNAME=$(ls -1 $DIR | head -n1)
+                username=$(ls -1 $users_enabled | head -n1)
             fi
-            echo $USERNAME
+            echo $username
         fi
         ;;
 
@@ -77,8 +92,8 @@ case "$1" in
 
     # @private
     getpwd)
-        USERNAME=$2
-        cat "$DIR/${USERNAME}"
+        username=$2
+        cat "${users_enabled}/${username}"
         ;;
     *)
         ${BASEDIR}/zjunet.sh usage

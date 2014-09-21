@@ -43,11 +43,11 @@ zjunet: CLI Tool (VPN/WLAN/DNS) for Zjuer
 Usage: zjunet [ACTION]
 
 Actions:
-        user add/edit/delete/list        User Manager
-        vpn connect(-c)/disconnect(-d)   Connect VPN
-        wlan login/logout                ZJUWLAN    
-        ip                               Show IP
-        dns                              Test and set up DNS Server
+        user add/edit/delete/list/enable/disable     User Manager
+        vpn connect(-c)/disconnect(-d)               Connect VPN
+        wlan login/logout                            ZJUWLAN    
+        ip                                           Show IP
+        dns                                          Test and set up DNS Server
 EOF
         ;;
 esac

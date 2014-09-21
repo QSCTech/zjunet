@@ -41,12 +41,15 @@ xl2tpd_restart() {
     }
     
     # wait until ready
-    for i in $(seq 0 120); do
+    for i in $(seq 0 10); do
         if [ -e "/var/run/xl2tpd/l2tp-control" ]; then
             return 0
         fi
         sleep 1
     done
+
+    echo "Fail to start xl2tpd"
+    exit 1
 }
 
 xl2tpd_create_lac() {
@@ -91,6 +94,8 @@ connect() {
 
         tail $PPP_LOG_FILE
         echo -n > $PPP_LOG_FILE
+
+        echo "Try to bring up ppp."
 
         count=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.' | wc -l)
         if [ ${count} -gt ${prev_count} ]; then
