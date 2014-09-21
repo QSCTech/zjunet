@@ -23,15 +23,19 @@
 
 set_up_routes() {
 
-    IP=$(ip route show 0/0 | cut -d " " -f 3)
+    ip=$(ip route show 0/0 | cut -d " " -f 3)
 
-    case "$IP" in
+    gateway=$(ip route get 10.10.0.21 | grep via | awk '{print $3}')
+
+    case "$ip" in
         10.189.*)
             ;;
         10.171.*)
             ;;
         *)
-            # 内网静态路由 TODO
+            # 内网静态路由
+            ip route delete 10.0.0.0/8 > /dev/null
+            ip route add  10.0.0.0/8 via $gateway
             ;;
     esac
 
@@ -52,7 +56,17 @@ set_up_routes() {
     # todo nexthop
 }
 
+disconnect() {
+    users=$("${BASEDIR}/user.sh" getall)
+    for username in $users; do
+        echo "Logout: ${username}"
+        "${BASEDIR}/xl2tpd.sh" disconnect $username
+    done
+    set_up_routes
+}
+
 connect() {
+    disconnect
     users=$("${BASEDIR}/user.sh" getall)
     for username in $users; do
         password=$("${BASEDIR}/user.sh" getpwd $username)
@@ -62,14 +76,6 @@ connect() {
     set_up_routes
 }
 
-disconnect() {
-    users=$("${BASEDIR}/user.sh" getall)
-    for username in $users; do
-        echo "Logout: ${username}"
-        "${BASEDIR}/xl2tpd.sh" disconnect $username
-    done
-    set_up_routes
-}
 
 
 #####################################
