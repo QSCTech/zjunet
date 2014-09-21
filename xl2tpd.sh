@@ -19,6 +19,9 @@
 # along with this program.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+PPP_LOG_FILE=/var/log/zjuvpn
+
+
 xl2tpd_restart() {
 
     # for Openwrt / Debian / Ubuntu
@@ -32,7 +35,7 @@ xl2tpd_restart() {
     }
     
     # wait until ready
-    for i in $(seq 0 "${TIMEOUT}"); do
+    for i in $(seq 0 120); do
         if [ -e "/var/run/xl2tpd/l2tp-control" ]; then
             return 0
         fi
@@ -47,8 +50,9 @@ xl2tpd_create_lac() {
     LNS="10.5.1.9"
     LAC_NAME=zjuvpn-${username}
     PPP_OPT_FILE=/etc/ppp/peers/${LAC_NAME}
-    PPP_LOG_FILE=/var/log/${LAC_NAME}
     L2TPD_CFG_FILE=/etc/xl2tpd/xl2tpd.conf
+
+    touch $PPP_LOG_FILE
 
     cat > $PPP_OPT_FILE <<EOF
 noauth
@@ -59,7 +63,9 @@ password $password
 EOF
     chmod 600 $PPP_OPT_FILE
 
-    LAC=<<EOF
+    touch $L2TPD_CFG_FILE
+    if ! grep -q "\[lac ${LAC_NAME}\]" $L2TPD_CFG_FILE; then
+        cat >> $L2TPD_CFG_FILE <<EOF
 [lac ${LAC_NAME}]
 lns = $LNS
 redial = no
@@ -72,10 +78,6 @@ require pap = no
 autodial = yes
  
 EOF
-
-    touch $L2TPD_CFG_FILE
-    if ! grep -q "\[lac ${LAC_NAME}\]" $L2TPD_CFG_FILE; then
-        echo $LAC >> $L2TPD_CFG_FILE
     fi
 }
 
@@ -88,26 +90,29 @@ disconnect() {
 connect() {
     username=$1
     LAC_NAME=zjuvpn-$1
-    xl2tpd-control disconnect ${LAC_NAME}
-    xl2tpd-control connect ${LAC_NAME}
+    xl2tpd-control disconnect ${LAC_NAME} > /dev/null
+    xl2tpd-control connect ${LAC_NAME} > /dev/null
 
-    echo -n "Connnecting..."
+    echo -n > $PPP_LOG_FILE
 
     prev_count=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.' | wc -l)
 
     for i in $(seq 0 120); do
-        echo -e "."
+
+        tail $PPP_LOG_FILE
 
         count=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.' | wc -l)
         if [ ${count} -gt ${prev_count} ]; then
-            echo "Bring up ppp. Done."
+            echo "Bring up ppp, done."
             return
         fi
+
+        sleep 1
     done
 
     echo "Fail to bring up ppp. Timeout."
 
-    disconnect
+    disconnect $1
 }
 
 case $1 in
