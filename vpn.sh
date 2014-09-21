@@ -26,41 +26,41 @@ disconnect() {
 }
 
 set_up_routes() {
-    IP=$(ip route show 0/0 | cut -d " " -f 3)
+    # IP=$(ip route show 0/0 | cut -d " " -f 3)
 
-    case "$IP" in
-        10.189.*)
-            return
-            ;;
-        10.171.*)
-            return
-            ;;
-    esac
+    # case "$IP" in
+    #     10.189.*)
+    #         return
+    #         ;;
+    #     10.171.*)
+    #         return
+    #         ;;
+    # esac
 
-    # set up routes here
+    # # set up routes here
 
 
-    # interfaces
+    # # interfaces
     # ip addr show | grep 'inet.*ppp' | grep ' 10.5.'
 
-    GW=$(ip route get $VPN_SERVER 2>/dev/null | grep via | awk '{print $3}')
-    PPP=$(ip addr show | grep ppp[0-9]: | cut "-d " -f2 | cut -d: -f1)
-    echo "[MSG] Detected gateway: $GW, PPP device: $PPP ."
+    # GW=$(ip route get $VPN_SERVER 2>/dev/null | grep via | awk '{print $3}')
+    # PPP=$(ip addr show | grep ppp[0-9]: | cut "-d " -f2 | cut -d: -f1)
+    # echo "[MSG] Detected gateway: $GW, PPP device: $PPP ."
 
-    ip route add  10.0.0.0/8 via $GW
-    ip route add   0.0.0.0/1 dev $PPP
-    ip route add 128.0.0.0/1 dev $PPP
+    # ip route add  10.0.0.0/8 via $GW
+    # ip route add   0.0.0.0/1 dev $PPP
+    # ip route add 128.0.0.0/1 dev $PPP
 
     # todo nexthop
 }
 
 connect() {
-    # restart xl2tpd
-    xl2tpd_restart
-    xl2tpd_wait_until_ready
-
-    disconnect
-    # todo
+    users=$("${BASEDIR}/user.sh" getall)
+    for username in $users; do
+        password=$("${BASEDIR}/user.sh" getpwd $username)
+        echo "Login using ${username}"
+        "${BASEDIR}/xl2tpd.sh" connect $username $password
+    done
     set_up_routes
 }
 
@@ -70,6 +70,8 @@ connect() {
 # Dispatch
 #
 #####################################
+
+BASEDIR=$(dirname $0)
 
 case "$1" in
 
