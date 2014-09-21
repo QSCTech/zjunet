@@ -110,7 +110,7 @@ connect() {
         sleep 1
     done
 
-    echo "Fail to bring up ppp. Timeout."
+    echo "Fail to bring up ppp, timeout."
 
     disconnect $1
 }
