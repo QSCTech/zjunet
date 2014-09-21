@@ -70,7 +70,7 @@ case "$1" in
     # @private
     get)
         count=$(ls -1A $users_enabled | wc -l)
-        if [ "${COUNT}" -eq "0" ]; then
+        if [ "${count}" -eq "0" ]; then
             echo "No user found. Use 'zjunet user add' to add a user."
             exit 1
         else
