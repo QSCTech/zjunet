@@ -3,6 +3,7 @@
 # xl2tpd.sh -- xl2tpd connect / disconnect
 #
 # Copyright (C) 2014 Zeno Zeng <zenoofzeng@gmail.com>
+# Copyright (C) 2014 Zhang Hai <Dreaming.in.Code.ZH@Gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,7 +26,7 @@ xl2tpd_restart() {
         /etc/init.d/xl2tpd restart
     }
 
-    # for arch linux
+    # for Arch Linux
     type systemctl >/dev/null 2>&1 && {
         systemctl xl2tpd restart
     }
@@ -37,27 +38,83 @@ xl2tpd_restart() {
         fi
         sleep 1
     done
-
 }
 
-connect() {
+xl2tpd_create_lac() {
     username=$1
     password=$2
 
-    # TODO
+    LNS="10.5.1.9"
+    LAC_NAME=zjuvpn-${username}
+    PPP_OPT_FILE=/etc/ppp/peers/${LAC_NAME}
+    PPP_LOG_FILE=/var/log/${LAC_NAME}
+    L2TPD_CFG_FILE=/etc/xl2tpd/xl2tpd.conf
+
+    cat > $PPP_OPT_FILE <<EOF
+noauth
+linkname $LAC_NAME
+logfile $PPP_LOG_FILE
+name $username
+password $password
+EOF
+    chmod 600 $PPP_OPT_FILE
+
+    LAC=<<EOF
+[lac ${LAC_NAME}]
+lns = $LNS
+redial = no
+redial timeout = 5
+require chap = yes
+require authentication = no
+ppp debug = no
+pppoptfile = ${PPP_OPT_FILE}
+require pap = no
+autodial = yes
+ 
+EOF
+
+    touch $L2TPD_CFG_FILE
+    if ! grep -q "\[lac ${LAC_NAME}\]" $L2TPD_CFG_FILE; then
+        echo $LAC >> $L2TPD_CFG_FILE
+    fi
 }
 
 disconnect() {
     username=$1
-    password=$2
-
-    # TODO
+    LAC_NAME=zjuvpn-$1
+    xl2tpd-control disconnect ${LAC_NAME}
 }
 
+connect() {
+    username=$1
+    LAC_NAME=zjuvpn-$1
+    xl2tpd-control disconnect ${LAC_NAME}
+    xl2tpd-control connect ${LAC_NAME}
+
+    echo -n "Connnecting..."
+
+    prev_count=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.' | wc -l)
+
+    for i in $(seq 0 120); do
+        echo -e "."
+
+        count=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.' | wc -l)
+        if [ ${count} -gt ${prev_count} ]; then
+            echo "Bring up ppp. Done."
+            return
+        fi
+    done
+
+    echo "Fail to bring up ppp. Timeout."
+
+    disconnect
+}
 
 case $1 in
 
     connect)
+        xl2tpd_restart
+        xl2tpd_create_lac $2 $3
         connect $2 $3
         ;;
 

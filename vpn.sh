@@ -5,6 +5,7 @@
 # Requirements: xl2tpd
 #
 # Copyright (C) 2014 Zeno Zeng <zenoofzeng@gmail.com>
+# Copyright (C) 2014 Zhang Hai <Dreaming.in.Code.ZH@Gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,10 +20,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see
 # <http://www.gnu.org/licenses/>.
-
-start_xl2tpd() {
-    echo 'start xl2tpd'
-}
 
 disconnect() {
     echo 'disconnect'
@@ -42,6 +39,10 @@ set_up_routes() {
 
     # set up routes here
 
+
+    # interfaces
+    # ip addr show | grep 'inet.*ppp' | grep ' 10.5.'
+
     GW=$(ip route get $VPN_SERVER 2>/dev/null | grep via | awk '{print $3}')
     PPP=$(ip addr show | grep ppp[0-9]: | cut "-d " -f2 | cut -d: -f1)
     echo "[MSG] Detected gateway: $GW, PPP device: $PPP ."
@@ -54,11 +55,21 @@ set_up_routes() {
 }
 
 connect() {
+    # restart xl2tpd
+    xl2tpd_restart
+    xl2tpd_wait_until_ready
+
     disconnect
     # todo
     set_up_routes
 }
 
+
+#####################################
+#
+# Dispatch
+#
+#####################################
 
 case "$1" in
 
