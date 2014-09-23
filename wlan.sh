@@ -26,10 +26,13 @@ logout() {
     PASSWORD=$2
 
     echo "Logout: ${USERNAME}"
-    RESPONSE=$(curl "https://net.zju.edu.cn/rad_online.php" -H "Content-Type: application/x-www-form-urlencoded" -d "action=auto_dm&username=${USERNAME}&password=${PASSWORD}" -s | iconv -c -f gbk -t utf8)
+    RESPONSE=$(curl "https://net.zju.edu.cn/cgi-bin/srun_portal" -H "Content-Type: application/x-www-form-urlencoded" -d "action=logout" -s)
 
     case "${RESPONSE}" in
         *ok*)
+            echo "Logout: success."
+            ;;
+        *成功*)
             echo "Logout: success."
             ;;
         *)
