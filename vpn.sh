@@ -23,6 +23,8 @@
 
 set_up_routes() {
 
+    echo "[INFO] Setting up ip route."
+
     ip=$(ip route show 0/0 | cut -d " " -f 3)
 
     gateway=$(ip route get 10.10.0.21 | grep via | awk '{print $3}')
