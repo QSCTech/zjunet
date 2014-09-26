@@ -40,10 +40,21 @@ zjunet: CLI Tool (VPN/WLAN/DNS) for Zjuer
 Usage: zjunet [ACTION]
 
 Actions:
-        user add/edit/delete/list/enable/disable     User Manager
-        vpn connect(-c)/disconnect(-d)/route         Connect VPN / Set up ip route
-        wlan login/logout                            ZJUWLAN    
-        dns                                          Test and set up DNS Server
+    user
+        add            Add user
+        edit           Edit user
+        delete         Delete user
+        list           List all enabled users
+        enable         Enable a user
+        disable        Disable a user
+    vpn
+        connect(-c)    Connect VPN and set up ip route
+        disconnect(-d) Disconnect VPN and reset ip route
+        route          Set up ip route
+    wlan
+        login          Login ZJUWLAN via curl
+        logout         Logout ZJUWLAN via curl
+    dns                Test and set up DNS Server
 EOF
         ;;
 esac
