@@ -21,18 +21,48 @@
 # along with this program.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+ip_route_del() {
+    count=$(ip route show $1 | wc -l)
+    if [ "${count}" -gt "0" ]; then
+        echo $1
+        ip route del $1
+    fi
+}
+
 set_up_routes() {
 
     echo "[INFO] Setting up ip route."
 
-    ip=$(ip route show 0/0 | cut -d " " -f 3)
-
     gateway=$(ip route get 10.10.0.21 | grep via | awk '{print $3}')
+
+    devs_count=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.' | awk '{print $7}' | wc -l)
+    if [ "${devs_count}" -eq "0" ]; then
+        dev=$(ip route get 10.10.0.21 | head -n1 | awk '{print $5}')
+
+        ip_route_del 10.0.0.0/8
+        ip_route_del 58.196.192.0/19
+        ip_route_del 58.196.224.0/20
+        ip_route_del 58.200.100.0/24
+        ip_route_del 210.32.0.0/20
+        ip_route_del 210.32.128.0/19
+        ip_route_del 210.32.160.0/21
+        ip_route_del 210.32.168.0/22
+        ip_route_del 210.32.172.0/23
+        ip_route_del 210.32.176.0/20
+        ip_route_del 222.205.0.0/17
+        ip_route_del 10.5.1.0/24
+        ip_route_del 10.10.0.0/24
+
+        ip route replace default via $gateway dev $dev
+
+        ip route
+        return
+    fi
 
     ip route replace 10.5.1.0/24 via $gateway # for LNS
     ip route replace 10.10.0.0/24 via $gateway # for DNS
 
-    case "$ip" in
+    case "$gateway" in
         10.189.*)
             ;;
         10.171.*)
