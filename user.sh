@@ -96,6 +96,7 @@ case "$1" in
         cat "${users_enabled}/${username}"
         ;;
     *)
+        BASEDIR=$(dirname $0)
         ${BASEDIR}/zjunet.sh usage
         ;;
 esac

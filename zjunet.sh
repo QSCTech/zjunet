@@ -28,7 +28,11 @@ case "$1" in
         "${BASEDIR}/wlan.sh" $2
         ;;
     vpn)
-        sudo "${BASEDIR}/vpn.sh" $2
+        if [ $EUID -eq "0" ]; then
+            "${BASEDIR}/vpn.sh" $2
+        else
+            sudo "${BASEDIR}/vpn.sh" $2
+        fi
         ;;
     dns)
         "${BASEDIR}/dns.sh"
@@ -41,9 +45,9 @@ Usage: zjunet [ACTION]
 
 Actions:
     user
-        add            Add user
-        edit           Edit user
-        delete         Delete user
+        add            Add a user
+        edit           Edit a (enabled) user
+        delete         Delete a (enabled) user
         list           List all enabled users
         enable         Enable a user
         disable        Disable a user

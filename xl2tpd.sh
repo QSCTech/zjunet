@@ -131,6 +131,7 @@ case $1 in
             xl2tpd_restart
         fi
         xl2tpd_create_lac
+        xl2tpd-control add ${LAC_NAME}
         connect
         ;;
 
