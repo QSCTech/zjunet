@@ -41,7 +41,7 @@ Usage: zjunet [ACTION]
 
 Actions:
         user add/edit/delete/list/enable/disable     User Manager
-        vpn connect(-c)/disconnect(-d)               Connect VPN
+        vpn connect(-c)/disconnect(-d)/route         Connect VPN / Set up ip route
         wlan login/logout                            ZJUWLAN    
         dns                                          Test and set up DNS Server
 EOF

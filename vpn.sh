@@ -60,13 +60,13 @@ set_up_routes() {
     esac
 
     # NEXTHOP
-    ip route delete default > /dev/null
     devs=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.' | awk '{print $7}')
-    cmd="ip route add default"
+    cmd="ip route replace default"
     for dev in $devs; do
         cmd="${cmd} nexthop dev ${dev}"
     done
     $cmd
+    ip route
 }
 
 disconnect() {
@@ -100,6 +100,10 @@ connect() {
 BASEDIR=$(dirname $0)
 
 case "$1" in
+
+    route)
+        set_up_routes
+        ;;
 
     -d)
         disconnect

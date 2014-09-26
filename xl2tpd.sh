@@ -113,6 +113,17 @@ connect() {
     xl2tpd-control disconnect ${LAC_NAME}
 }
 
+disconnect() {
+    xl2tpd-control disconnect ${LAC_NAME}
+    tail $PPP_LOG_FILE
+    echo -n > $PPP_LOG_FILE
+}
+
+# 强制踢下线
+force_disconnect() {
+    disconnect
+}
+
 case $1 in
 
     connect)
@@ -124,9 +135,8 @@ case $1 in
         ;;
 
     disconnect)
-        xl2tpd-control disconnect ${LAC_NAME}
-        tail $PPP_LOG_FILE
-        echo -n > $PPP_LOG_FILE
-        ;;
-
+        if [ ! -e $L2TPD_CONTROL_FILE ]; then
+            xl2tpd_restart
+        fi
+        force_disconnect
 esac
