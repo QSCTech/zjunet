@@ -97,13 +97,14 @@ for dev in $devs; do
 done
 
 # WLAN
-ip route replace 10.202.68.44 via ${gateway}
-zjuwlan_status=`curl 10.202.68.44 | grep net.zju.edu.cn | wc -l`
+zjuwlan_test_ip=10.202.68.44
+ip route replace $zjuwlan_test_ip via ${gateway}
+zjuwlan_status=`curl -s $zjuwlan_test_ip | grep net.zju.edu.cn | wc -l`
 if [ $zjuwlan_status -gt 0 ]
 then
     cmd="${cmd} nexthop via ${gateway}"
 fi
-ip route del 10.202.68.44 || true
+ip route del $zjuwlan_test_ip || true
 $cmd
 ip route
 
