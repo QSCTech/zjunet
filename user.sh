@@ -24,8 +24,22 @@ users_disabled="$HOME/.zjunet/users-disabled"
 mkdir -p $users_enabled
 mkdir -p $users_disabled
 
+BASEDIR=$(dirname $0)
+
 getall() {
     ls -1A $users_enabled | xargs | tr "\n" " "
+}
+
+edituser() {
+    username=$1
+    password=$2
+    echo $password > "$users_enabled/${username}"
+    echo "[INFO] Disconnect VPN"
+    "${BASEDIR}/sudo.sh" "${BASEDIR}/vpn.sh" disconnect
+    echo "[INFO] Write to xl2tpd.conf"
+    "${BASEDIR}/sudo.sh" "${BASEDIR}/xl2tpd.sh" adduser ${username} $password
+    echo "[INFO] Restart xl2tpd"
+    "${BASEDIR}/sudo.sh" "${BASEDIR}/xl2tpd.sh" restart
 }
 
 # dispatch
@@ -46,14 +60,14 @@ case "$1" in
     add)
         read -p "username: " username
         read -p "password: " password
-        echo $password > "$users_enabled/${username}"
+        edituser $username $password
         ;;
 
     edit)
         users=$(getall)
         read -p "username [ ${users}]: " username
         read -p "password: " password
-        echo $password > "$users_enabled/${username}"
+        edituser $username $password
         ;;
 
     delete)
@@ -96,7 +110,6 @@ case "$1" in
         cat "${users_enabled}/${username}"
         ;;
     *)
-        BASEDIR=$(dirname $0)
         ${BASEDIR}/zjunet.sh usage
         ;;
 esac

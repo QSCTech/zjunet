@@ -28,11 +28,7 @@ case "$1" in
         "${BASEDIR}/wlan.sh" $2
         ;;
     vpn)
-        if [ $EUID -eq "0" ]; then
-            "${BASEDIR}/vpn.sh" $2
-        else
-            sudo "${BASEDIR}/vpn.sh" $2
-        fi
+        "${BASEDIR}/sudo.sh" "${BASEDIR}/vpn.sh" $2
         ;;
     dns)
         "${BASEDIR}/dns.sh"

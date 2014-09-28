@@ -104,7 +104,7 @@ set_up_routes() {
 disconnect() {
     users=$("${BASEDIR}/user.sh" getall)
     for username in $users; do
-        echo "Logout: ${username}"
+        echo "[INFO] Logout: ${username}"
         "${BASEDIR}/xl2tpd.sh" disconnect $username
     done
     set_up_routes
@@ -113,15 +113,15 @@ disconnect() {
 connect() {
     disconnect
     users=$("${BASEDIR}/user.sh" getall)
+
     for username in $users; do
         password=$("${BASEDIR}/user.sh" getpwd $username)
-        echo "Login using ${username}"
+        echo "[INFO] Login using ${username}"
         "${BASEDIR}/xl2tpd.sh" connect $username $password
     done
+
     set_up_routes
 }
-
-
 
 #####################################
 #

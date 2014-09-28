@@ -31,21 +31,43 @@ PPP_OPT_FILE=/etc/ppp/peers/${LAC_NAME}
 mkdir -p /var/log/zjunet/
 LOG_FILE=/var/log/zjunet/${USERNAME}
 
-xl2tpd_restart() {
+XL2TPD_CONTROL_FILE=/var/run/xl2tpd/l2tp-control
 
+xl2tpd_stop() {
     # for Openwrt / Debian / Ubuntu
     type systemctl >/dev/null 2>&1 || {
-        /etc/init.d/xl2tpd restart
+        /etc/init.d/xl2tpd stop
     }
 
     # for Arch Linux
     type systemctl >/dev/null 2>&1 && {
-        systemctl xl2tpd restart
+        systemctl xl2tpd stop
     }
+
+}
+
+xl2tpd_start() {
+    # for Openwrt / Debian / Ubuntu
+    type systemctl >/dev/null 2>&1 || {
+        /etc/init.d/xl2tpd start
+    }
+
+    # for Arch Linux
+    type systemctl >/dev/null 2>&1 && {
+        systemctl xl2tpd start
+    }
+}
+
+xl2tpd_restart() {
+
+    xl2tpd_stop
+    rm -f ${XL2TPD_CONTROL_FILE}
+    xl2tpd_start
     
     # wait until ready
     for i in $(seq 0 10); do
-        if [ -e "/var/run/xl2tpd/l2tp-control" ]; then
+        if [ -e ${XL2TPD_CONTROL_FILE} ]; then
+            echo "[INFO] xl2tpd ready."
             return 0
         fi
         sleep 1
@@ -85,9 +107,17 @@ EOF
     fi
 }
 
+xl2tpd_connect() {
+    xl2tpd-control connect $1
+}
+
+xl2tpd_disconnect() {
+    xl2tpd-control disconnect $1
+}
+
 connect() {
-    xl2tpd-control disconnect ${LAC_NAME} > /dev/null
-    xl2tpd-control connect ${LAC_NAME}
+    xl2tpd_disconnect ${LAC_NAME}
+    xl2tpd_connect ${LAC_NAME}
 
     echo -n > $PPP_LOG_FILE
 
@@ -110,11 +140,11 @@ connect() {
 
     echo "Fail to bring up ppp, timeout."
 
-    xl2tpd-control disconnect ${LAC_NAME}
+    xl2tpd_disconnect ${LAC_NAME}
 }
 
 disconnect() {
-    xl2tpd-control disconnect ${LAC_NAME}
+    xl2tpd_disconnect ${LAC_NAME}
     tail $PPP_LOG_FILE
     echo -n > $PPP_LOG_FILE
 }
@@ -126,18 +156,19 @@ force_disconnect() {
 
 case $1 in
 
-    connect)
-        if [ ! -e $L2TPD_CONTROL_FILE ]; then
-            xl2tpd_restart
-        fi
+    restart)
+        xl2tpd_restart
+        ;;
+
+    adduser)
         xl2tpd_create_lac
-        xl2tpd-control add ${LAC_NAME}
+        ;;
+
+    connect)
         connect
         ;;
 
     disconnect)
-        if [ ! -e $L2TPD_CONTROL_FILE ]; then
-            xl2tpd_restart
-        fi
         force_disconnect
+        ;;
 esac
