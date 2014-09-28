@@ -123,10 +123,19 @@ connect() {
 
     prev_count=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.' | wc -l)
 
-    for i in $(seq 0 30); do
+    for i in $(seq 0 120); do
 
         tail $PPP_LOG_FILE
         tail $PPP_LOG_FILE >> $LOG_FILE
+        if [ $(tail $PPP_LOG_FILE | grep 'Connection terminated' | wc -l) -ne 0 ]
+        then
+            echo "[INFO] Connection terminated."
+            echo -n > $PPP_LOG_FILE
+            echo "[INFO] Retry now."
+            xl2tpd_disconnect ${LAC_NAME}
+            sleep 1
+            xl2tpd_connect ${LAC_NAME}
+        fi
         echo -n > $PPP_LOG_FILE
 
         count=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.' | wc -l)
@@ -149,11 +158,6 @@ disconnect() {
     echo -n > $PPP_LOG_FILE
 }
 
-# 强制踢下线
-force_disconnect() {
-    disconnect
-}
-
 case $1 in
 
     restart)
@@ -169,6 +173,6 @@ case $1 in
         ;;
 
     disconnect)
-        force_disconnect
+        disconnect
         ;;
 esac

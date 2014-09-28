@@ -24,7 +24,6 @@
 ip_route_del() {
     count=$(ip route show $1 | wc -l)
     if [ "${count}" -gt "0" ]; then
-        echo $1
         ip route del $1
     fi
 }
