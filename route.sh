@@ -4,6 +4,7 @@
 #
 # Copyright (C) 2014 Zeno Zeng <zenoofzeng@gmail.com>
 # Copyright (C) 2014 Hexcles Ma <bob1211@gmail.com>
+# Copyright (C) 2014 Senorsen Zhang <sen@senorsen.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -67,24 +68,24 @@ case "$gateway" in
     *)
         # 内网静态路由
         # See also: #18 (thanks Hexcles Ma)
-	ip route replace 10.0.0.0/8 via $gateway
+    ip route replace 10.0.0.0/8 via $gateway
 
         # Some classroom computers (especially East 6,7)
-	ip route replace 58.196.192.0/19 via $gateway
-	ip route replace 58.196.224.0/20 via $gateway
-	ip route replace 58.200.100.0/24 via $gateway
+    ip route replace 58.196.192.0/19 via $gateway
+    ip route replace 58.196.224.0/20 via $gateway
+    ip route replace 58.200.100.0/24 via $gateway
 
         # The public CERNET IP of most ZJU servers, which can be reached directly in the Intranet.
         # Most of them do have a 10.* IP, but sometimes school DNS just returns the public ones.
-	ip route replace 210.32.0.0/20 via $gateway
-	ip route replace 210.32.128.0/19 via $gateway
-	ip route replace 210.32.160.0/21 via $gateway
-	ip route replace 210.32.168.0/22 via $gateway
-	ip route replace 210.32.172.0/23 via $gateway
-	ip route replace 210.32.176.0/20 via $gateway
+    ip route replace 210.32.0.0/20 via $gateway
+    ip route replace 210.32.128.0/19 via $gateway
+    ip route replace 210.32.160.0/21 via $gateway
+    ip route replace 210.32.168.0/22 via $gateway
+    ip route replace 210.32.172.0/23 via $gateway
+    ip route replace 210.32.176.0/20 via $gateway
 
         # 玉泉和我们 vpn 后的 ip
-	ip route replace 222.205.0.0/17 via $gateway
+    ip route replace 222.205.0.0/17 via $gateway
         ;;
 esac
 
@@ -96,8 +97,13 @@ for dev in $devs; do
 done
 
 # WLAN
-cmd="${cmd} nexthop via ${gateway}"
-
+ip route replace 10.202.68.44 via ${gateway}
+zjuwlan_status=`curl 10.202.68.44 | grep net.zju.edu.cn | wc -l`
+if [ $zjuwlan_status -gt 0 ]
+then
+    cmd="${cmd} nexthop via ${gateway}"
+fi
+ip route del 10.202.68.44 || true
 $cmd
 ip route
 
