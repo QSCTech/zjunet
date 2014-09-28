@@ -21,6 +21,13 @@
 # along with this program.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+BASEDIR=$(dirname $0)
+
+USER="${BASEDIR}/user.sh"
+
+USERNAME=$($USER get)
+PASSWORD=$($USER getpwd $USERNAME)
+
 logout() {
     USERNAME=$1
     PASSWORD=$2
@@ -65,20 +72,15 @@ login() {
     esac
 }
 
-BASEDIR=$(dirname $0)
-USER="${BASEDIR}/user.sh"
-
-USERNAME=$($USER get)
-PASSWORD=$($USER getpwd $USERNAME)
 
 case "$1" in
-    login)
-        login $USERNAME $PASSWORD
+    disconnect)
+        logout $USERNAME $PASSWORD
         ;;
-    logout)
+    -d)
         logout $USERNAME $PASSWORD
         ;;
     *)
-        ${BASEDIR}/zjunet.sh usage
+        login $USERNAME $PASSWORD
         ;;
 esac

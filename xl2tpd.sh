@@ -131,7 +131,7 @@ connect() {
         then
             echo "[INFO] Connection terminated."
             echo -n > $PPP_LOG_FILE
-            echo "[INFO] Retry now."
+            echo "[INFO] Retrying now. (force kicking off, may take some time)"
             xl2tpd_disconnect ${LAC_NAME}
             sleep 1
             xl2tpd_connect ${LAC_NAME}

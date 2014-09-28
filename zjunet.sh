@@ -21,8 +21,15 @@
 BASEDIR=$(dirname $0)
 
 case "$1" in
+    route)
+        "${BASEDIR}/sudo.sh" "${BASEDIR}/route.sh"
+        ;;
     user)
         "${BASEDIR}/user.sh" $2
+        ;;
+    all)
+        "${BASEDIR}/wlan.sh" $2
+        "${BASEDIR}/sudo.sh" "${BASEDIR}/vpn.sh" $2
         ;;
     wlan)
         "${BASEDIR}/wlan.sh" $2
@@ -47,13 +54,16 @@ Actions:
         list           List all enabled users
         enable         Enable a user
         disable        Disable a user
+    all
+        connect(-c)    Connect VPN & ZJUWLAN, and combine them using nexthop
+        disconnect(-d) Disconnect VPN & ZJUWLAN
     vpn
         connect(-c)    Connect VPN and set up ip route
         disconnect(-d) Disconnect VPN and reset ip route
-        route          Set up ip route
     wlan
-        login          Login ZJUWLAN via curl
-        logout         Logout ZJUWLAN via curl
+        connect(-c)    Login ZJUWLAN via curl
+        disconnect(-d) Logout ZJUWLAN via curl
+    route              Set up ip route
     dns                Test and set up DNS Server
 EOF
         ;;
