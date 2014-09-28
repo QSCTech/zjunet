@@ -2,18 +2,6 @@
 
 Command Line Scripts for ZJU (VPN / WLAN / DNS)
 
-## Requirements
-
-### vpn
-
-- xl2tpd
-
-### wlan
-
-- curl
-
-- iconv
-
 ## Features
 
 - ZJU VPN (l2tp)
@@ -27,6 +15,18 @@ Command Line Scripts for ZJU (VPN / WLAN / DNS)
 - ZJUWLAN 与 ZJUVPN 带宽叠加（1 WLAN + N VPN，在 ZJUWLAN 下）
 
 - DNS 自动测试设置（适用于 DNS 坏掉的情况）
+
+## Requirements
+
+### vpn
+
+- xl2tpd
+
+### wlan
+
+- curl
+
+- iconv
 
 ## Links
 
