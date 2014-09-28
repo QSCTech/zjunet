@@ -14,23 +14,19 @@ Command Line Scripts for ZJU (VPN / WLAN / DNS)
 
 - iconv
 
-## TODO
+## Features
 
-- zjunet vpn
-
-## 目标
-
-- ZJU VPN
+- ZJU VPN (l2tp)
 
 - ZJU WLAN
-
-- Arch Linux / Ubuntu 支持
 
 - 路由器支持（written in Bourne Shell）
 
 - 多拨支持（多账户负载均衡）
 
-- DNS 自动设置
+- ZJUWLAN 与 ZJUVPN 带宽叠加（1 WLAN + N VPN，在 ZJUWLAN 下）
+
+- DNS 自动测试设置（适用于 DNS 坏掉的情况）
 
 ## Links
 
