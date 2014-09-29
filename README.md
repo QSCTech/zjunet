@@ -28,7 +28,15 @@ Command Line Scripts for ZJU (VPN / WLAN / DNS)
 
 - iconv
 
-### Dev
+## Install
+
+```bash
+git clone https://github.com/QSCTech/zjunet.git
+cd zjunet
+sudo ./install.sh
+```
+
+## Dev
 
 QSCer 可以直接向这个 repo push 而不用发 pull request。
 有什么疑虑可以提 issue 问一下，
