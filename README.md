@@ -46,6 +46,16 @@ master分支请尽可能保持稳定，
 进 dev 分支，
 或者拉开发分支。
 
+### Build
+
+#### DEB
+
+```bash
+sudo apt-get install build-essential autoconf automake autotools-dev dh-make debhelper devscripts fakeroot xutils lintian pbuilder
+```
+
+see also: http://www.webupd8.org/2010/01/how-to-create-deb-package-ubuntu-debian.html
+
 ## Links
 
 - [Array in unix Bourne Shell](http://unix.stackexchange.com/questions/137566/array-in-unix-bourne-shell)
