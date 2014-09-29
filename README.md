@@ -28,6 +28,16 @@ Command Line Scripts for ZJU (VPN / WLAN / DNS)
 
 - iconv
 
+### Dev
+
+QSCer 可以直接向这个 repo push 而不用发 pull request。
+有什么疑虑可以提 issue 问一下，
+或者直接来办公室找我(zenozeng)。
+master分支请尽可能保持稳定，
+如果要做破坏性变更的话，
+进 dev 分支，
+或者拉开发分支。
+
 ## Links
 
 - [Array in unix Bourne Shell](http://unix.stackexchange.com/questions/137566/array-in-unix-bourne-shell)
