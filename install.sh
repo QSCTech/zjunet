@@ -1,6 +1,6 @@
 #!/bin/sh
 
-BASEDIR=$(dirname $0)
+BASEDIR=$(dirname $0)/lib
 mkdir -p /usr/local/lib/zjunet
 cp -rf $BASEDIR /usr/local/lib/zjunet
 mkdir -p /usr/local/bin
