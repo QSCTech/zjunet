@@ -1,12 +1,21 @@
 #!/bin/sh
 
-VERSION=0.1-6
+rm -rf *.opk
+
+VERSION=$1
 
 # lib
 mkdir -p ./debian/usr/lib/zjunet
 cp ../../lib/* ./debian/usr/lib/zjunet
 
-cat > control <<EOF
+# bin
+mkdir -p ./debian/usr/bin
+echo '/usr/lib/zjunet/zjunet.sh "$@"' >> ./debian/usr/bin/zjunet
+chmod +x ./debian/usr/bin/zjunet
+
+# contorl file
+mkdir -p debian/DEBIAN
+cat > debian/DEBIAN/control <<EOF
 Package: zjunet
 Version: $VERSION
 Section: net
@@ -18,19 +27,10 @@ Description: Command Line Scripts for ZJU
  This script provides a VPN / WLAN / NEXTHOP for ZJUer.
 EOF
 
-# bin
-mkdir -p ./debian/usr/bin
-echo '/usr/lib/zjunet/zjunet.sh "$@"' >> ./debian/usr/bin/zjunet
-chmod +x ./debian/usr/bin/zjunet
-
-# contorl file
-mkdir -p debian/DEBIAN
-find ./debian -type d | xargs chmod 755
-cp control debian/DEBIAN
-
 # dpkg-deb
+find ./debian -type d | xargs chmod 755
 dpkg-deb -Zgzip --build debian
-mv debian.deb zjunet_${VERSION}_all.deb
+mv debian.deb zjunet_${VERSION}_all.opk
 
 # remove debian/
 rm -rf ./debian
