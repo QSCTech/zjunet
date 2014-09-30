@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSION=0.1-2
+VERSION=0.1-6
 
 # lib
 mkdir -p ./debian/usr/lib/zjunet
@@ -9,7 +9,7 @@ cp ../../lib/* ./debian/usr/lib/zjunet
 cat > control <<EOF
 Package: zjunet
 Version: $VERSION
-Section: base
+Section: net
 Priority: optional
 Architecture: all
 Depends: xl2tpd (>= 1.3.1), curl
@@ -29,8 +29,8 @@ find ./debian -type d | xargs chmod 755
 cp control debian/DEBIAN
 
 # dpkg-deb
-dpkg-deb --build debian
-mv debian.deb zjunet_${VERSION}_all.ipk
+dpkg-deb -Zgzip --build debian
+mv debian.deb zjunet_${VERSION}_all.deb
 
 # remove debian/
 rm -rf ./debian
