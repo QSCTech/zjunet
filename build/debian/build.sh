@@ -1,8 +1,11 @@
 #!/bin/sh
 
+# lib
+mkdir -p ./debian/usr/lib/zjunet
+cp ../../lib/* ./debian/usr/lib/zjunet
+
 # bin
 mkdir -p ./debian/usr/bin
-cp -r ../../lib ./debian/usr
 echo '/usr/lib/zjunet/zjunet.sh "$@"' >> ./debian/usr/bin/zjunet
 chmod +x ./debian/usr/bin/zjunet
 
