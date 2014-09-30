@@ -16,7 +16,7 @@ cp control debian/DEBIAN
 
 # dpkg-deb
 dpkg-deb --build debian
-mv debian.deb zjunet_0.1-1_all.deb
+mv debian.deb zjunet_0.1-2_all.deb
 
 # remove debian/
 rm -rf ./debian
