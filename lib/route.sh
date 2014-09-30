@@ -56,6 +56,15 @@ if [ "${devs_count}" -eq "0" ]; then
     return
 fi
 
+flush() {
+    # see also: https://github.com/QSCTech/zjunet/issues/39
+    ip route flush 10.5.1.5
+    ip route flush 10.5.1.7
+    ip route flush 10.5.1.9
+}
+
+flush
+
 ip route replace 10.5.1.0/24 via $gateway # for LNS
 ip route replace 10.10.0.0/24 via $gateway # for DNS
 
@@ -113,3 +122,4 @@ esac
 $cmd
 ip route
 
+ip route

@@ -123,7 +123,7 @@ connect() {
 
     prev_count=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.' | wc -l)
 
-    for i in $(seq 0 120); do
+    for i in $(seq 0 10000); do
 
         tail $PPP_LOG_FILE
         tail $PPP_LOG_FILE >> $LOG_FILE
@@ -144,7 +144,6 @@ connect() {
             return
         fi
 
-        sleep 1
     done
 
     echo "Fail to bring up ppp, timeout."

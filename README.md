@@ -38,6 +38,14 @@ cd zjunet
 sudo ./install.sh
 ```
 
+## Known Issues
+
+### ppp0 may disappear on openwrt
+
+make /etc/ppp/options's lcp-echo-failure larger.
+
+see also https://github.com/QSCTech/zjunet/issues/39
+
 ## Openwrt
 
 Install xl2tpd:
