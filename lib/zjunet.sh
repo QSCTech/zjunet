@@ -40,6 +40,9 @@ case "$1" in
     dns)
         "${BASEDIR}/dns.sh"
         ;;
+    --version)
+        echo "zjunet version: zjunet-0.1.0"
+        ;;
     *)
         cat <<EOF
 zjunet: CLI Tool (VPN/WLAN/DNS) for Zjuer
