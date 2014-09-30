@@ -68,24 +68,24 @@ case "$gateway" in
     *)
         # 内网静态路由
         # See also: #18 (thanks Hexcles Ma)
-    ip route replace 10.0.0.0/8 via $gateway
+        ip route replace 10.0.0.0/8 via $gateway
 
         # Some classroom computers (especially East 6,7)
-    ip route replace 58.196.192.0/19 via $gateway
-    ip route replace 58.196.224.0/20 via $gateway
-    ip route replace 58.200.100.0/24 via $gateway
+        ip route replace 58.196.192.0/19 via $gateway
+        ip route replace 58.196.224.0/20 via $gateway
+        ip route replace 58.200.100.0/24 via $gateway
 
         # The public CERNET IP of most ZJU servers, which can be reached directly in the Intranet.
         # Most of them do have a 10.* IP, but sometimes school DNS just returns the public ones.
-    ip route replace 210.32.0.0/20 via $gateway
-    ip route replace 210.32.128.0/19 via $gateway
-    ip route replace 210.32.160.0/21 via $gateway
-    ip route replace 210.32.168.0/22 via $gateway
-    ip route replace 210.32.172.0/23 via $gateway
-    ip route replace 210.32.176.0/20 via $gateway
+        ip route replace 210.32.0.0/20 via $gateway
+        ip route replace 210.32.128.0/19 via $gateway
+        ip route replace 210.32.160.0/21 via $gateway
+        ip route replace 210.32.168.0/22 via $gateway
+        ip route replace 210.32.172.0/23 via $gateway
+        ip route replace 210.32.176.0/20 via $gateway
 
         # 玉泉和我们 vpn 后的 ip
-    ip route replace 222.205.0.0/17 via $gateway
+        ip route replace 222.205.0.0/17 via $gateway
         ;;
 esac
 

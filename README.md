@@ -30,11 +30,19 @@ Command Line Scripts for ZJU (VPN / WLAN / DNS)
 
 ## Install
 
+### From source
+
 ```bash
 git clone https://github.com/QSCTech/zjunet.git
 cd zjunet
 sudo ./install.sh
 ```
+
+## Openwrt
+
+Install xl2tpd:
+
+https://downloads.openwrt.org/snapshots/trunk/ar71xx/packages/packages/
 
 ## Dev
 
