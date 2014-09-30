@@ -100,7 +100,7 @@ done
 zjuwlan_test_ip=10.202.68.44
 ip route replace $zjuwlan_test_ip via ${gateway}
 zjuwlan_status=`curl -s $zjuwlan_test_ip | grep net.zju.edu.cn | wc -l`
-if [ $zjuwlan_status -gt 0 ]
+if [ $zjuwlan_status -eq 0 ]
 then
     cmd="${cmd} nexthop via ${gateway}"
 fi
