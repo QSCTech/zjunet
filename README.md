@@ -48,13 +48,17 @@ master分支请尽可能保持稳定，
 
 ### Build
 
-#### DEB
+#### Debian
 
 ```bash
 sudo apt-get install build-essential autoconf automake autotools-dev dh-make debhelper devscripts fakeroot xutils lintian pbuilder
 ```
 
-see also: http://www.webupd8.org/2010/01/how-to-create-deb-package-ubuntu-debian.html
+#### see also
+
+- http://www.webupd8.org/2010/01/how-to-create-deb-package-ubuntu-debian.html
+
+- http://tldp.org/HOWTO/html_single/Debian-Binary-Package-Building-HOWTO/
 
 ## Links
 
