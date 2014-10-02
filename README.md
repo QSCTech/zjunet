@@ -18,15 +18,9 @@ Command Line Scripts for ZJU (VPN / WLAN / DNS)
 
 ## Requirements
 
-### vpn
-
 - xl2tpd
 
-### wlan
-
 - curl
-
-- iconv
 
 ## Install
 

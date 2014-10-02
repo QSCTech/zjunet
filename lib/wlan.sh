@@ -2,7 +2,7 @@
 
 # wlan.sh -- login/logout for ZJUWLAN
 #
-# Requirements: curl, iconv
+# Requirements: curl
 #
 # Copyright (C) 2014 Zhang Hai <Dreaming.in.Code.ZH@Gmail.com>
 # Copyright (C) 2014 Zeno Zeng <zenoofzeng@gmail.com>
@@ -56,7 +56,7 @@ login() {
     logout $USERNAME $PASSWORD
 
     echo "Login: ${USERNAME}"
-    RESPONSE=$(curl "https://net.zju.edu.cn/cgi-bin/srun_portal" -H "Content-Type: application/x-www-form-urlencoded" -d "action=login&username=${USERNAME}&password=${PASSWORD}&ac_id=3&type=1&is_ldap=1&local_auth=1" -s | iconv -c -f gbk -t utf8)
+    RESPONSE=$(curl "https://net.zju.edu.cn/cgi-bin/srun_portal" -H "Content-Type: application/x-www-form-urlencoded" -d "action=login&username=${USERNAME}&password=${PASSWORD}&ac_id=3&type=1&is_ldap=1&local_auth=1" -s)
 
     case "${RESPONSE}" in
         *help.html*)
