@@ -21,7 +21,7 @@ Version: $VERSION
 Section: net
 Priority: optional
 Architecture: all
-Depends: xl2tpd, curl
+Depends: xl2tpd, libcurl
 Maintainer: Zeno Zeng <zenoofzeng@gmail.com>
 Description: Command Line Scripts for ZJU
  This script provides a VPN / WLAN / NEXTHOP for ZJUer.
@@ -29,7 +29,7 @@ EOF
 
 # dpkg-deb
 find ./debian -type d | xargs chmod 755
-dpkg-deb -Zgzip --build debian
+dpkg-deb -Zgzip --build debian # for opkg
 mv debian.deb zjunet_${VERSION}_all.opk
 
 # remove debian/

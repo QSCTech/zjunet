@@ -23,6 +23,14 @@
 
 BASEDIR=$(dirname $0)
 
+flush() {
+    # see also: https://github.com/QSCTech/zjunet/issues/39
+    ip route flush 10.5.1.5
+    ip route flush 10.5.1.7
+    ip route flush 10.5.1.9
+    ip route flush 10.5.6.2
+}
+
 disconnect() {
     users=$("${BASEDIR}/user.sh" getall)
     for username in $users; do
@@ -40,6 +48,7 @@ connect() {
         password=$("${BASEDIR}/user.sh" getpwd $username)
         echo "[INFO] Login using ${username}"
         "${BASEDIR}/xl2tpd.sh" connect $username $password
+        flush
     done
 
     "${BASEDIR}/route.sh"
