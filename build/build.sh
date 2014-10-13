@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=0.1.1-2
+VERSION=0.1.1-3
 
 cd debian
 ./build.sh $VERSION > /dev/null

@@ -21,7 +21,7 @@ Version: $VERSION
 Section: net
 Priority: optional
 Architecture: all
-Depends: xl2tpd, curl
+Depends: xl2tpd (>= 1.3.1), curl
 Maintainer: Zeno Zeng <zenoofzeng@gmail.com>
 Description: Command Line Scripts for ZJU
  This script provides a VPN / WLAN / NEXTHOP for ZJUer.
