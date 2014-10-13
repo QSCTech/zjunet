@@ -18,6 +18,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see
 # <http://www.gnu.org/licenses/>.
+#
+# RUN AS ROOT! >..< ~~ / by xero ~~~ ararararar ~~~~
 
 LNS="10.5.1.9"
 L2TPD_CFG_FILE=/etc/xl2tpd/xl2tpd.conf
@@ -78,7 +80,7 @@ xl2tpd_restart() {
 }
 
 xl2tpd_create_lac() {
-    touch $PPP_LOG_FILE
+    #touch $PPP_LOG_FILE
 
     cat > $PPP_OPT_FILE <<EOF
 noauth
@@ -122,10 +124,11 @@ connect() {
     echo -n > $PPP_LOG_FILE
 
     prev_count=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.' | wc -l)
+	echo $LOG_FILE
 
     for i in $(seq 0 10000); do
 
-        tail $PPP_LOG_FILE
+        tail $PPP_LOG_FILE >> /home/xero/tmp/ttttt
         tail $PPP_LOG_FILE >> $LOG_FILE
         if [ $(tail $PPP_LOG_FILE | grep 'Connection terminated' | wc -l) -ne 0 ]
         then

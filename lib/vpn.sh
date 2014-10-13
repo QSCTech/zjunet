@@ -25,19 +25,19 @@ BASEDIR=$(dirname $0)
 
 flush() {
     # see also: https://github.com/QSCTech/zjunet/issues/39
-    ip route flush 10.5.1.5
-    ip route flush 10.5.1.7
-    ip route flush 10.5.1.9
-    ip route flush 10.5.6.2
+    "${BASEDIR}/sudo.sh" ip route flush 10.5.1.5
+    "${BASEDIR}/sudo.sh" ip route flush 10.5.1.7
+    "${BASEDIR}/sudo.sh" ip route flush 10.5.1.9
+    "${BASEDIR}/sudo.sh" ip route flush 10.5.6.2
 }
 
 disconnect() {
     users=$("${BASEDIR}/user.sh" getall)
     for username in $users; do
         echo "[INFO] Logout: ${username}"
-        "${BASEDIR}/xl2tpd.sh" disconnect $username
+        "${BASEDIR}/sudo.sh" "${BASEDIR}/xl2tpd.sh" disconnect $username
     done
-    "${BASEDIR}/route.sh"
+    "${BASEDIR}/sudo.sh" "${BASEDIR}/route.sh"
 }
 
 connect() {
@@ -47,11 +47,13 @@ connect() {
     for username in $users; do
         password=$("${BASEDIR}/user.sh" getpwd $username)
         echo "[INFO] Login using ${username}"
-        "${BASEDIR}/xl2tpd.sh" connect $username $password
+        "${BASEDIR}/sudo.sh" "${BASEDIR}/xl2tpd.sh" connect $username $password
+		echo ------ flush
         flush
+		echo ------ febd
     done
 
-    "${BASEDIR}/route.sh"
+    "${BASEDIR}/sudo.sh" "${BASEDIR}/route.sh"
 }
 
 #####################################

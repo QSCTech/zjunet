@@ -3,5 +3,5 @@
 if [ "$(id -u)" -eq "0" ]; then
     "$@"
 else
-    sudo -u root "$@"
+	sudo -u root "$@"
 fi

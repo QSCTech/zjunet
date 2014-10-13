@@ -29,13 +29,13 @@ case "$1" in
         ;;
     all)
         "${BASEDIR}/wlan.sh" $2
-        "${BASEDIR}/sudo.sh" "${BASEDIR}/vpn.sh" $2
+        "${BASEDIR}/vpn.sh" $2
         ;;
     wlan)
         "${BASEDIR}/wlan.sh" $2
         ;;
     vpn)
-        "${BASEDIR}/sudo.sh" "${BASEDIR}/vpn.sh" $2
+        "${BASEDIR}/vpn.sh" $2
         ;;
     dns)
         "${BASEDIR}/dns.sh"
