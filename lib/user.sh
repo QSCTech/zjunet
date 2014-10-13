@@ -35,7 +35,7 @@ edituser() {
     password=$2
     echo $password > "$users_enabled/${username}"
     echo "[INFO] Disconnect VPN"
-    "${BASEDIR}/sudo.sh" "${BASEDIR}/vpn.sh" disconnect
+    "${BASEDIR}/vpn.sh" disconnect
     echo "[INFO] Write to xl2tpd.conf"
     "${BASEDIR}/sudo.sh" "${BASEDIR}/xl2tpd.sh" adduser ${username} $password
     echo "[INFO] Restart xl2tpd"

@@ -53,7 +53,8 @@ if [ "${devs_count}" -eq "0" ]; then
     ip route replace default via $gateway dev $dev
 
     ip route
-    return
+	exit 0
+    #return
 fi
 
 ip route replace 10.5.1.0/24 via $gateway # for LNS
