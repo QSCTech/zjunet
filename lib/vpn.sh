@@ -48,9 +48,7 @@ connect() {
         password=$("${BASEDIR}/user.sh" getpwd $username)
         echo "[INFO] Login using ${username}"
         "${BASEDIR}/sudo.sh" "${BASEDIR}/xl2tpd.sh" connect $username $password
-		echo ------ flush
         flush
-		echo ------ febd
     done
 
     "${BASEDIR}/sudo.sh" "${BASEDIR}/route.sh"

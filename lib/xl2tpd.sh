@@ -65,7 +65,7 @@ xl2tpd_restart() {
     xl2tpd_stop
     rm -f ${XL2TPD_CONTROL_FILE}
     xl2tpd_start
-    
+
     # wait until ready
     for i in $(seq 0 10); do
         if [ -e ${XL2TPD_CONTROL_FILE} ]; then
@@ -104,7 +104,7 @@ ppp debug = no
 pppoptfile = ${PPP_OPT_FILE}
 require pap = no
 autodial = yes
- 
+
 EOF
     fi
 }
@@ -124,11 +124,9 @@ connect() {
     echo -n > $PPP_LOG_FILE
 
     prev_count=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.' | wc -l)
-	echo $LOG_FILE
 
     for i in $(seq 0 10000); do
 
-        tail $PPP_LOG_FILE >> /home/xero/tmp/ttttt
         tail $PPP_LOG_FILE >> $LOG_FILE
         if [ $(tail $PPP_LOG_FILE | grep 'Connection terminated' | wc -l) -ne 0 ]
         then
