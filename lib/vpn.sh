@@ -60,6 +60,9 @@ connect() {
 #
 #####################################
 
+# start xl2tpd if not
+"${BASEDIR}/sudo.sh" "${BASEDIR}/xl2tpd.sh" trystart
+
 case "$1" in
 
     -d)

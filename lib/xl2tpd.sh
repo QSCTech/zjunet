@@ -58,13 +58,6 @@ xl2tpd_start() {
     type systemctl >/dev/null 2>&1 && {
         systemctl xl2tpd start
     }
-}
-
-xl2tpd_restart() {
-
-    xl2tpd_stop
-    rm -f ${XL2TPD_CONTROL_FILE}
-    xl2tpd_start
 
     # wait until ready
     for i in $(seq 0 10); do
@@ -77,6 +70,20 @@ xl2tpd_restart() {
 
     echo "Fail to start xl2tpd"
     exit 1
+}
+
+xl2tpd_trystart() {
+    if [ -e ${XL2TPD_CONTROL_FILE} ]; then
+        echo "[INFO] xl2tpd ready."
+    else
+        xl2tpd_start
+    fi
+}
+
+xl2tpd_restart() {
+    xl2tpd_stop
+    rm -f ${XL2TPD_CONTROL_FILE}
+    xl2tpd_start
 }
 
 xl2tpd_create_lac() {
@@ -162,6 +169,11 @@ case $1 in
 
     restart)
         xl2tpd_restart
+        ;;
+
+    trystart)
+        # will start unless already started
+        xl2tpd_trystart
         ;;
 
     adduser)
