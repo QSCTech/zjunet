@@ -112,6 +112,5 @@ case "$gateway" in
 esac
 
 $cmd
-ip route
 
 ip route
