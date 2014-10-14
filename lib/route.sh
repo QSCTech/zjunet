@@ -20,6 +20,8 @@
 # along with this program.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+ip route flush cache
+
 ip_route_del() {
     count=$(ip route show $1 | wc -l)
     if [ "${count}" -gt "0" ]; then
@@ -114,3 +116,5 @@ esac
 $cmd
 
 ip route
+
+ip route flush cache

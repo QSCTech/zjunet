@@ -41,7 +41,7 @@ case "$1" in
         "${BASEDIR}/dns.sh"
         ;;
     --version)
-        echo "zjunet version: zjunet-0.1.1"
+        echo "zjunet version: zjunet-0.1.3"
         ;;
     *)
         cat <<EOF
@@ -68,6 +68,7 @@ Actions:
         disconnect(-d) Logout ZJUWLAN via curl
     route              Set up ip route
     dns                Test and set up DNS Server
+    --version          Show Version
 EOF
         ;;
 esac
