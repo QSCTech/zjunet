@@ -45,7 +45,6 @@ xl2tpd_stop() {
     type systemctl >/dev/null 2>&1 && {
         systemctl xl2tpd stop
     }
-
 }
 
 xl2tpd_start() {
@@ -139,9 +138,10 @@ connect() {
         then
             echo "[INFO] Connection terminated."
             echo -n > $PPP_LOG_FILE
-            echo "[INFO] Retrying now. (force kicking off, may take some time)"
-            xl2tpd_disconnect ${LAC_NAME}
+            echo "[INFO] Retrying now. (try to kick off, may take some time)"
             sleep 1
+            xl2tpd_disconnect ${LAC_NAME}
+            sleep 5
             xl2tpd_connect ${LAC_NAME}
         fi
         echo -n > $PPP_LOG_FILE
