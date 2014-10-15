@@ -19,21 +19,18 @@
 # <http://www.gnu.org/licenses/>.
 
 # init
-users_enabled="$HOME/.zjunet/users-enabled"
-users_disabled="$HOME/.zjunet/users-disabled"
-mkdir -p $users_enabled
-mkdir -p $users_disabled
+
+L2TPD_CFG_FILE=/etc/xl2tpd/xl2tpd.conf
 
 BASEDIR=$(dirname $0)
 
 getall() {
-    ls -1A $users_enabled | xargs | tr "\n" " "
+    cat $L2TPD_CFG_FILE | grep lac | sed 's/\[lac zju-l2tp-//' | sed 's/\]//'
 }
 
 edituser() {
     username=$1
     password=$2
-    echo $password > "$users_enabled/${username}"
     echo "[INFO] Disconnect VPN"
     "${BASEDIR}/vpn.sh" disconnect
     echo "[INFO] Write to xl2tpd.conf"
@@ -44,18 +41,6 @@ edituser() {
 
 # dispatch
 case "$1" in
-
-    enable)
-        users=$(ls -1A $users_disabled | xargs | tr "\n" " ")
-        read -p "Enable User [ ${users}]: " username
-        mv "${users_disabled}/${username}" "${users_enabled}/${username}"
-        ;;
-
-    disable)
-        users=$(getall)
-        read -p "Disable User [ ${users}]: " username
-        mv "${users_enabled}/${username}" "${users_disabled}/${username}"
-        ;;
 
     add)
         read -p "username: " username
@@ -70,14 +55,8 @@ case "$1" in
         edituser $username $password
         ;;
 
-    delete)
-        users=$(getall)
-        read -p "Delete User [ ${users}]: " username
-        rm -i "$users_enabled/${username}"
-        ;;
-
     list)
-        ls -1A $users_enabled
+        getall
         ;;
 
     # Get a user
@@ -107,8 +86,9 @@ case "$1" in
     # @private
     getpwd)
         username=$2
-        cat "${users_enabled}/${username}"
+        "${BASEDIR}/sudo.sh" cat /etc/ppp/peers/zju-l2tp-${username} | grep password | sed 's/password //'
         ;;
+
     *)
         ${BASEDIR}/zjunet.sh usage
         ;;

@@ -27,7 +27,7 @@ L2TPD_CFG_FILE=/etc/xl2tpd/xl2tpd.conf
 USERNAME=$2
 PASSWORD=$3
 LAC_NAME=zju-l2tp-${USERNAME}
-PPP_LOG_FILE=/tmp/zju-l2tp-log
+PPP_LOG_FILE=/tmp/zju-l2tp-log-${USERNAME}
 PPP_OPT_FILE=/etc/ppp/peers/${LAC_NAME}
 
 mkdir -p /var/log/zjunet/
@@ -86,7 +86,6 @@ xl2tpd_restart() {
 }
 
 xl2tpd_create_lac() {
-    #touch $PPP_LOG_FILE
 
     cat > $PPP_OPT_FILE <<EOF
 noauth
@@ -123,14 +122,7 @@ xl2tpd_disconnect() {
     xl2tpd-control disconnect $1
 }
 
-connect() {
-    xl2tpd_disconnect ${LAC_NAME}
-    xl2tpd_connect ${LAC_NAME}
-
-    echo -n > $PPP_LOG_FILE
-
-    prev_count=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.' | wc -l)
-
+xl2tpd_waituser() {
     for i in $(seq 0 10000); do
 
         tail $PPP_LOG_FILE >> $LOG_FILE
@@ -146,10 +138,13 @@ connect() {
         fi
         echo -n > $PPP_LOG_FILE
 
-        count=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.' | wc -l)
-        if [ ${count} -gt ${prev_count} ]; then
-            echo "Bring up ppp, done."
-            return
+        pid="/var/run/ppp-${LAC_NAME}.pid"
+        if [ -e $pid ]; then
+            ppp=$(cat $pid | grep ppp)
+            if ip addr show | grep "inet.*${ppp}" > /dev/null; then
+                ip addr show | grep "inet.*${ppp}" | sed 's/^ */[VPN] /'
+                return
+            fi
         fi
 
     done
@@ -180,8 +175,8 @@ case $1 in
         xl2tpd_create_lac
         ;;
 
-    connect)
-        connect
+    waituser)
+        xl2tpd_waituser
         ;;
 
     disconnect)

@@ -26,12 +26,12 @@ Command Line Scripts for ZJU (VPN / WLAN / DNS)
 
 ### Debian / Ubuntu
 
-https://github.com/QSCTech/zjunet/releases 
+https://github.com/QSCTech/zjunet/releases
 下载 deb，双击安装就是。
 
 ### Openwrt
 
-https://github.com/QSCTech/zjunet/releases 
+https://github.com/QSCTech/zjunet/releases
 下载 opk，然后 `opkg install` 就是。
 
 ### From source

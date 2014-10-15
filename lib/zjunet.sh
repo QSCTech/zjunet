@@ -52,11 +52,9 @@ Usage: zjunet [ACTION]
 Actions:
     user
         add            Add a user
-        edit           Edit a (enabled) user
-        delete         Delete a (enabled) user
         list           List all enabled users
-        enable         Enable a user
-        disable        Disable a user
+        edit           Edit a (enabled) user
+        Note: to delete/disable a user, edit /etc/xl2tpd/xl2tpd.conf yourself
     all
         connect(-c)    Connect VPN & ZJUWLAN, and combine them using nexthop
         disconnect(-d) Disconnect VPN & ZJUWLAN

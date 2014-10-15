@@ -42,12 +42,16 @@ disconnect() {
 
 connect() {
     disconnect
+    sleep 3
+
     users=$("${BASEDIR}/user.sh" getall)
+
+    "${BASEDIR}/sudo.sh" "${BASEDIR}/xl2tpd.sh" restart
 
     for username in $users; do
         password=$("${BASEDIR}/user.sh" getpwd $username)
         echo "[INFO] Login using ${username}"
-        "${BASEDIR}/sudo.sh" "${BASEDIR}/xl2tpd.sh" connect $username $password
+        "${BASEDIR}/sudo.sh" "${BASEDIR}/xl2tpd.sh" waituser $username
         flush
     done
 
