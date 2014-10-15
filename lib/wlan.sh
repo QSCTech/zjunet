@@ -83,6 +83,7 @@ case "$1" in
     *)
         login $USERNAME $PASSWORD
         ;;
-
-    "${BASEDIR}/sudo.sh" "${BASEDIR}/route.sh"
 esac
+
+"${BASEDIR}/sudo.sh" "${BASEDIR}/route.sh"
+

@@ -62,7 +62,7 @@ case "$1" in
     # Get a user
     # @private
     get)
-        count=$(ls -1A $users_enabled | wc -l)
+        count=$(getall | wc -l)
         if [ "${count}" -eq "0" ]; then
             echo "No user found. Use 'zjunet user add' to add a user."
             exit 1
@@ -71,7 +71,7 @@ case "$1" in
                 users=$(getall)
                 read -p "Choose User [ ${users}]: " username
             else
-                username=$(ls -1 $users_enabled | head -n1)
+                username=$(getall | head -n1)
             fi
             echo $username
         fi
