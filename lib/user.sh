@@ -25,7 +25,7 @@ L2TPD_CFG_FILE=/etc/xl2tpd/xl2tpd.conf
 BASEDIR=$(dirname $0)
 
 getall() {
-    cat $L2TPD_CFG_FILE | grep lac | sed 's/\[lac zju-l2tp-//' | sed 's/\]//'
+    cat $L2TPD_CFG_FILE | grep 'lac zju-l2tp-' | sed 's/\[lac zju-l2tp-//' | sed 's/\]//'
 }
 
 edituser() {
