@@ -46,6 +46,11 @@ sudo ./install.sh
 
 ## Known Issues
 
+### 丢包
+
+在有的机子上会丢包（因为用的是 nexthop ）。
+等有空了也许会换成 iptables 来解决这个问题。
+
 ### ppp0 may disappear on openwrt
 
 make /etc/ppp/options's lcp-echo-failure larger.
@@ -63,10 +68,9 @@ https://downloads.openwrt.org/snapshots/trunk/ar71xx/packages/packages/
 QSCer 可以直接向这个 repo push 而不用发 pull request。
 有什么疑虑可以提 issue 问一下，
 或者直接来办公室找我(zenozeng)。
-master分支请尽可能保持稳定，
-如果要做破坏性变更的话，
-进 dev 分支，
-或者拉开发分支。
+
+master分支就是开发分支。
+但是请保证bump version的时候要稳定。
 
 ### Build
 
