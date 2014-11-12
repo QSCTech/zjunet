@@ -4,6 +4,7 @@
 #
 # Copyright (C) 2014 Zeno Zeng <zenoofzeng@gmail.com>
 # Copyright (C) 2014 Zhang Hai <Dreaming.in.Code.ZH@Gmail.com>
+# Copyright (C) 2014 Xero Essential <x@xeroe.net || xqyww123@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -43,7 +44,7 @@ xl2tpd_stop() {
 
     # for Arch Linux
     type systemctl >/dev/null 2>&1 && {
-        systemctl xl2tpd stop
+        systemctl stop xl2tpd
     }
 }
 
@@ -55,12 +56,12 @@ xl2tpd_start() {
 
     # for Arch Linux
     type systemctl >/dev/null 2>&1 && {
-        systemctl xl2tpd start
+        systemctl start xl2tpd
     }
 
     # wait until ready
     for i in $(seq 0 10); do
-        if [ -e ${XL2TPD_CONTROL_FILE} ]; then
+        if [ -e ${XL2TPD_CONTROL_FILE} ] || (type systemctl >/dev/null && systemctl status xl2tpd >/dev/null) ; then
             echo "[INFO] xl2tpd ready."
             return 0
         fi
@@ -72,7 +73,7 @@ xl2tpd_start() {
 }
 
 xl2tpd_trystart() {
-    if [ -e ${XL2TPD_CONTROL_FILE} ]; then
+    if [ -e ${XL2TPD_CONTROL_FILE} ] || (type systemctl >/dev/null && systemctl status xl2tpd >/dev/null); then
         echo "[INFO] xl2tpd ready."
     else
         xl2tpd_start
