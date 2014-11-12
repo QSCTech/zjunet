@@ -33,7 +33,8 @@ echo "[INFO] Setting up ip route."
 
 gateway=$(ip route get 10.10.0.21 | grep via | awk '{print $3}')
 
-devs_count=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.' | awk '{print $7}' | wc -l)
+# Recently VPN server 10.5.1.7 has the P-t-P: 172.172.172.2, after some updates.
+devs_count=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.\|172.172.172.' | awk '{print $7}' | wc -l)
 if [ "${devs_count}" -eq "0" ]; then
     dev=$(ip route get 10.10.0.21 | head -n1 | awk '{print $5}')
 
@@ -78,22 +79,23 @@ case "$gateway" in
         ip route replace 58.196.224.0/20 via $gateway
         ip route replace 58.200.100.0/24 via $gateway
 
-        # The public CERNET IP of most ZJU servers, which can be reached directly in the Intranet.
-        # Most of them do have a 10.* IP, but sometimes school DNS just returns the public ones.
+        # The public CERNET IP of most ZJU servers, which can be reached directly in the Intranet through 10.0.0.0/8.
+        # If these servers are DNATed(have 210.32.*.* IP), we can't reach it through our gateway or VPN P-t-P. 
+        # However these addresses also belong to Yu Quan Campus, our VPN, etc., 
+        # Which can be reached through our internal gateway. 
         ip route replace 210.32.0.0/20 via $gateway
         ip route replace 210.32.128.0/19 via $gateway
         ip route replace 210.32.160.0/21 via $gateway
         ip route replace 210.32.168.0/22 via $gateway
         ip route replace 210.32.172.0/23 via $gateway
         ip route replace 210.32.176.0/20 via $gateway
-
-        # 玉泉和我们 vpn 后的 ip
         ip route replace 222.205.0.0/17 via $gateway
         ;;
 esac
 
 # NEXTHOP
-devs=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.' | awk '{print $7}')
+# Recently VPN server 10.5.1.7 has the P-t-P: 172.172.172.2, after some updates.
+devs=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.\|172.172.172.' | awk '{print $7}')
 cmd="ip route replace default"
 for dev in $devs; do
     cmd="${cmd} nexthop dev ${dev}"
