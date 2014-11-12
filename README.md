@@ -36,10 +36,9 @@ https://github.com/QSCTech/zjunet/releases
 
 ### From source
 
-一般来说 master 分支是稳定的，dev 分支会有破坏性变更。
+master分支是开发分支，请直接从 release 那里获取源码。
 
 ```bash
-git clone https://github.com/QSCTech/zjunet.git
 cd zjunet
 sudo ./install.sh
 ```
