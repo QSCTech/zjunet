@@ -40,9 +40,6 @@ disconnect() {
 }
 
 connect() {
-    disconnect
-    sleep 3
-
     users=$("${BASEDIR}/user.sh" getall)
 
     "${BASEDIR}/sudo.sh" "${BASEDIR}/xl2tpd.sh" restart
