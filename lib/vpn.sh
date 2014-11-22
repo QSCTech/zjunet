@@ -34,7 +34,6 @@ flush() {
 disconnect() {
     users=$("${BASEDIR}/user.sh" getall)
     for username in $users; do
-        echo "[INFO] Logout: ${username}"
         "${BASEDIR}/sudo.sh" "${BASEDIR}/xl2tpd.sh" disconnect $username
     done
     "${BASEDIR}/sudo.sh" "${BASEDIR}/route.sh"

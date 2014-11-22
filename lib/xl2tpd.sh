@@ -36,28 +36,25 @@ LOG_FILE=/var/log/zjunet/${USERNAME}
 
 XL2TPD_CONTROL_FILE=/var/run/xl2tpd/l2tp-control
 
-xl2tpd_stop() {
-    # for Openwrt / Debian / Ubuntu
-    type systemctl >/dev/null 2>&1 || {
-        /etc/init.d/xl2tpd stop
-    }
+type systemctl >/dev/null 2>&1
+HAVE_SYSTEMD=$?
 
-    # for Arch Linux
-    type systemctl >/dev/null 2>&1 && {
+xl2tpd_stop() {
+    echo "[INFO] Stopping xl2tpd"
+    if [ $HAVE_SYSTEMD -eq 0 ]; then
         systemctl stop xl2tpd
-    }
+    else
+        /etc/init.d/xl2tpd stop
+    fi
 }
 
 xl2tpd_start() {
-    # for Openwrt / Debian / Ubuntu
-    type systemctl >/dev/null 2>&1 || {
-        /etc/init.d/xl2tpd start
-    }
-
-    # for Arch Linux
-    type systemctl >/dev/null 2>&1 && {
+    echo "[INFO] Starting xl2tpd"
+    if [ $HAVE_SYSTEMD -eq 0 ]; then
         systemctl start xl2tpd
-    }
+    else
+        /etc/init.d/xl2tpd start
+    fi
 
     # wait until ready
     for i in $(seq 0 10); do
@@ -73,6 +70,7 @@ xl2tpd_start() {
 }
 
 xl2tpd_trystart() {
+    echo "[INFO] Try to start xl2tpd if not"
     if [ -e ${XL2TPD_CONTROL_FILE} ] || (type systemctl >/dev/null && systemctl status xl2tpd >/dev/null); then
         echo "[INFO] xl2tpd ready."
     else
@@ -116,11 +114,15 @@ EOF
 }
 
 xl2tpd_connect() {
+    echo "[INFO] try connecting $1"
     xl2tpd-control connect $1
+    echo "[INFO] xl2tpd-control done"
 }
 
 xl2tpd_disconnect() {
+    echo "[INFO] try disconnecting $1"
     xl2tpd-control disconnect $1
+    echo "[INFO] xl2tpd-control done"
 }
 
 xl2tpd_waituser() {
