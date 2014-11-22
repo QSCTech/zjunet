@@ -138,6 +138,7 @@ xl2tpd_waituser() {
             xl2tpd_disconnect ${LAC_NAME}
             sleep 5
             xl2tpd_connect ${LAC_NAME}
+            echo "[INFO] again"
         fi
         echo -n > $PPP_LOG_FILE
 

@@ -74,6 +74,8 @@ case "$1" in
         ;;
 
     *)
+        disconnect
+        sleep 3
         connect
         ;;
 

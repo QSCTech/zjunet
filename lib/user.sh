@@ -18,8 +18,6 @@
 # along with this program.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-# init
-
 L2TPD_CFG_FILE=/etc/xl2tpd/xl2tpd.conf
 
 BASEDIR=$(dirname $0)
