@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=0.2.2-0
+VERSION=$(cat ../lib/version)
 
 cd debian
 ./build.sh $VERSION > /dev/null

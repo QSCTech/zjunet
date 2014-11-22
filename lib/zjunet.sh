@@ -41,7 +41,8 @@ case "$1" in
         "${BASEDIR}/dns.sh"
         ;;
     --version)
-        echo "zjunet version: zjunet-0.2.1"
+        version=$(cat "${BASEDIR}/version" | sed 's/-.*//')
+        echo "zjunet version: zjunet-$version"
         ;;
     *)
         cat <<EOF

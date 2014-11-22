@@ -115,13 +115,13 @@ EOF
 
 xl2tpd_connect() {
     echo "[INFO] try connecting $1"
-    xl2tpd-control connect $1
+    xl2tpd-control connect $1 &
     echo "[INFO] xl2tpd-control done"
 }
 
 xl2tpd_disconnect() {
     echo "[INFO] try disconnecting $1"
-    xl2tpd-control disconnect $1
+    xl2tpd-control disconnect $1 &
     echo "[INFO] xl2tpd-control done"
 }
 
@@ -133,7 +133,7 @@ xl2tpd_waituser() {
         then
             echo "[INFO] Connection terminated."
             echo -n > $PPP_LOG_FILE
-            echo "[INFO] Retrying now. (try to kick off, may take some time)"
+            echo "[INFO] Retrying now. "
             sleep 1
             xl2tpd_disconnect ${LAC_NAME}
             sleep 5
