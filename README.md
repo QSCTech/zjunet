@@ -46,7 +46,6 @@ https://github.com/QSCTech/zjunet/releases
     
     sudo wget https://dl.zjuqsc.com/linux/qsc.public.key -O /etc/pki/rpm-gpg/RPM-GPG-KEY-QSC-COMP66
 	sudo wget https://dl.zjuqsc.com/linux/qsc.repo -O /etc/yum.repos.d/qsc.repo
-	sudo yum update
 	sudo yum install zjunet
     
 
