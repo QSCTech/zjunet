@@ -29,7 +29,7 @@ EOF
 
 # dpkg-deb
 find ./debian -type d | xargs chmod 755
-dpkg-deb -Zgzip --build debian # for opkg
+fakeroot dpkg-deb -Zgzip --build debian # for opkg
 mv debian.deb zjunet_${VERSION}_all.opk
 
 # remove debian/
