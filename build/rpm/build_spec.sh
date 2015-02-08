@@ -20,7 +20,7 @@ echo "BuildArch: noarch" >> zjunet.spec
 echo "" >> zjunet.spec
 echo "%description" >> zjunet.spec
 echo "Command Line Scripts for ZJU " >> zjunet.spec
-echo " This script provides a VPN / WLAN / NEXTHOP for ZJUer. " >> zjunet.spec
+echo "This script provides a VPN / WLAN / NEXTHOP for ZJUer. " >> zjunet.spec
 echo "" >> zjunet.spec
 echo "%prep" >> zjunet.spec
 echo "%setup -q" >> zjunet.spec
