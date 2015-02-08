@@ -24,7 +24,7 @@ Command Line Scripts for ZJU (VPN / WLAN / DNS)
 
 ## Install
 
-### Debian / Ubuntu
+### Debian / Ubuntu (deb)
 
 Use only one of the methods below:
 
@@ -38,6 +38,17 @@ Use only one of the methods below:
 #### 2. Download deb
 https://github.com/QSCTech/zjunet/releases
 下载 deb，双击安装就是。
+
+### Fedora / CentOS (rpm)
+在 Releases 中下载安装方法如上。注意 CentOS 7 中需要 epel 源提供 xl2tpd 
+
+#### Install from QSC website's linux repository
+    
+    sudo wget https://dl.zjuqsc.com/linux/qsc.public.key -O /etc/pki/rpm-gpg/RPM-GPG-KEY-QSC-COMP66
+	sudo rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-QSC-COMP66
+	sudo wget https://dl.zjuqsc.com/linux/qsc.repo -O /etc/yum.repos.d/qsc.repo
+	sudo yum install zjunet
+    
 
 ### Openwrt
 
