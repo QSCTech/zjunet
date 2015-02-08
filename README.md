@@ -30,8 +30,8 @@ Use only one of the methods below:
 
 #### 1. From QSC website's linux repository
     
-    wget -qO - http://dl.zjuqsc.com/linux/qsc.public.key | sudo apt-key add -
-    sudo wget http://dl.zjuqsc.com/linux/debian/qsc.list -O /etc/apt/sources.list.d/qsc.list
+    wget -qO - https://dl.zjuqsc.com/linux/qsc.public.key | sudo apt-key add -
+    sudo wget https://dl.zjuqsc.com/linux/debian/qsc.list -O /etc/apt/sources.list.d/qsc.list
     sudo apt-get update
     sudo apt-get install zjunet
     
