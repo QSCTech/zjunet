@@ -4,12 +4,14 @@ VERSION=$(cat ../lib/version)
 
 cd rpm
 ./build.sh $VERSION
+cd ..
 
 cd debian
-./build.sh $VERSION > /dev/null
+./build.sh $VERSION
+cd ..
 
-cd ../openwrt
-./build.sh $VERSION > /dev/null
+cd openwrt
+./build.sh $VERSION
 
 cd ..
 find . -regextype posix-egrep -regex ".*\.(opk|deb|rpm)$"

@@ -48,4 +48,5 @@ mv debian.deb zjunet_${VERSION}_all.deb
 
 # remove debian/
 rm -rf ./debian
-rm -f control
+rm -rf control
+
