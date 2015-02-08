@@ -1,2 +1,9 @@
+
+# Packages
 *.deb
 *.opk
+*.rpm
+
+# Rubbish
+*.swp
+

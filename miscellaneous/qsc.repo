@@ -1,0 +1,8 @@
+[qsc]
+name=Several things for Qiu Shi Chao Website
+baseurl=http://dl.zjuqsc.com/linux/yum
+failovermethod=priority
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-QSC-COMP66
+

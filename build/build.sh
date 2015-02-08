@@ -2,6 +2,10 @@
 
 VERSION=$(cat ../lib/version)
 
+cd rpm
+./build.sh $VERSION
+exit
+
 cd debian
 ./build.sh $VERSION > /dev/null
 
