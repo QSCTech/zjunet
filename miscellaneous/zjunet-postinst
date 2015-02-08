@@ -1,0 +1,31 @@
+#!/bin/sh
+
+command -v apt-key 2>&1 >/dev/null && [ -d /etc/apt ] && {
+	cp /usr/share/zjunet/qsc.list /etc/apt/sources.list.d/qsc.list
+	chmod 644 /etc/apt/sources.list.d/qsc.list
+	apt-key add /usr/share/zjunet/qsc.public.key 2>&1 >/dev/null || true
+	echo "Added apt list."
+}
+
+command -v rpm 2>&1 >/dev/null && [ -d /etc/pki/rpm-gpg ] && [ -d /etc/yum.repos.d ] && {
+	cp /usr/share/zjunet/qsc.public.key /etc/pki/rpm-gpg/RPM-GPG-KEY-QSC-COMP66
+	chmod 644 /etc/pki/rpm-gpg/RPM-GPG-KEY-QSC-COMP66
+	rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-QSC-COMP66
+	cp /usr/share/zjunet/qsc.repo /etc/yum.repos.d/qsc.repo || true
+	echo "Added yum repo."
+}
+
+cat <<BANNER
+----------------------------------------------------------------------
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License Version 3 for more details.
+
+You can ask questions, file a bug or make PRs here:
+* https://github.com/QSCTech/zjunet
+
+----------------------------------------------------------------------
+BANNER
+

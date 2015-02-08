@@ -22,23 +22,7 @@ mkdir -p debian/DEBIAN
 cat  > debian/DEBIAN/postinst <<EOF
 #!/bin/sh
 
-cp /usr/share/zjunet/qsc.list /etc/apt/sources.list.d/qsc.list
-chmod 644 /etc/apt/sources.list.d/qsc.list
-apt-key add /usr/share/zjunet/qsc.public.key 2>&1 >/dev/null || true
-
-cat <<BANNER
-----------------------------------------------------------------------
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License Version 3 for more details.
-
-You can ask questions, file a bug or make PRs here:
-* https://github.com/QSCTech/zjunet
-
-----------------------------------------------------------------------
-BANNER
+/usr/share/zjunet/zjunet-postinst
 
 EOF
 chmod 755 debian/DEBIAN/postinst

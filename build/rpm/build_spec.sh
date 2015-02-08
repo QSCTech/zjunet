@@ -34,6 +34,7 @@ echo 'mkdir -p $RPM_BUILD_ROOT/usr/bin' >> zjunet.spec
 echo 'mkdir -p $RPM_BUILD_ROOT/usr/lib/zjunet' >> zjunet.spec
 echo 'mkdir -p $RPM_BUILD_ROOT/usr/share/zjunet' >> zjunet.spec
 echo 'install -m 755 zjunet $RPM_BUILD_ROOT/usr/bin/zjunet' >> zjunet.spec
+echo 'install -m 755 zjunet-postinst $RPM_BUILD_ROOT/usr/share/zjunet/zjunet-postinst' >> zjunet.spec
 cd lib
 for f in *.sh; do
 echo "install -m 755 lib/$f \$RPM_BUILD_ROOT/usr/lib/zjunet/$f" >> ../zjunet.spec
@@ -47,6 +48,7 @@ echo "%defattr(-,root,root)" >> zjunet.spec
 echo "/usr/bin/zjunet" >> zjunet.spec
 echo "/usr/share/zjunet/qsc.public.key" >> zjunet.spec
 echo "/usr/share/zjunet/qsc.repo" >> zjunet.spec
+echo "/usr/share/zjunet/zjunet-postinst" >> zjunet.spec
 cd lib
 for f in *.sh; do
 echo "/usr/lib/zjunet/$f" >> ../zjunet.spec
@@ -57,9 +59,6 @@ echo "%clean" >> zjunet.spec
 echo 'rm -rf $RPM_BUILD_ROOT' >> zjunet.spec
 echo "" >> zjunet.spec
 echo "%post" >> zjunet.spec
-echo "cp /usr/share/zjunet/qsc.public.key /etc/pki/rpm-gpg/RPM-GPG-KEY-QSC-COMP66 || true" >> zjunet.spec
-echo "rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-QSC-COMP66 || true" >> zjunet.spec
-echo "cp /usr/share/zjunet/qsc.repo /etc/yum.repos.d/qsc.repo || true" >> zjunet.spec
 echo "/usr/share/zjunet/zjunet-postinst || true" >> zjunet.spec
 echo "" >> zjunet.spec
 echo "%changelog" >> zjunet.spec
