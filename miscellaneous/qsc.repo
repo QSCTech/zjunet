@@ -5,4 +5,5 @@ failovermethod=priority
 enabled=1
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-QSC-COMP66
+metadata_expire=30m
 
