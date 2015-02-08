@@ -26,6 +26,15 @@ Command Line Scripts for ZJU (VPN / WLAN / DNS)
 
 ### Debian / Ubuntu
 
+Use only one of the methods below:
+
+#### 1. From QSC website's linux repository
+    
+    wget -qO - http://dl.zjuqsc.com/linux/qsc.public.key | sudo apt-key add -
+    sudo apt-get update
+    sudo apt-get install zjunet
+    
+#### 2. Download deb
 https://github.com/QSCTech/zjunet/releases
 下载 deb，双击安装就是。
 
