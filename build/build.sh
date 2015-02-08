@@ -12,4 +12,4 @@ cd ../openwrt
 ./build.sh $VERSION > /dev/null
 
 cd ..
-find . -regextype posix-egrep -regex ".*\.(opk|deb)$"
+find . -regextype posix-egrep -regex ".*\.(opk|deb|rpm)$"
