@@ -10,7 +10,7 @@ command -v apt-key 2>&1 >/dev/null && [ -d /etc/apt ] && {
 command -v rpm 2>&1 >/dev/null && [ -d /etc/pki/rpm-gpg ] && [ -d /etc/yum.repos.d ] && {
 	cp /usr/share/zjunet/qsc.public.key /etc/pki/rpm-gpg/RPM-GPG-KEY-QSC-COMP66
 	chmod 644 /etc/pki/rpm-gpg/RPM-GPG-KEY-QSC-COMP66
-	rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-QSC-COMP66
+	rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-QSC-COMP66 2>&1 >/dev/null || true
 	cp /usr/share/zjunet/qsc.repo /etc/yum.repos.d/qsc.repo || true
 	echo "Added yum repo."
 }
