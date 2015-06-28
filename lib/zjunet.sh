@@ -19,6 +19,7 @@
 # <http://www.gnu.org/licenses/>.
 
 BASEDIR=$(dirname $0)
+MISCELLDIR="/usr/share/zjunet"
 
 case "$1" in
     route)
@@ -41,7 +42,7 @@ case "$1" in
         "${BASEDIR}/dns.sh"
         ;;
     version|--version)
-        version_full=`cat "${BASEDIR}/VERSION"`
+        version_full=`cat "${MISCELLDIR}/VERSION"`
         version=$(echo $version_full | sed 's/-.*//')
         echo "zjunet version: $version (${version_full})"
         ;;
