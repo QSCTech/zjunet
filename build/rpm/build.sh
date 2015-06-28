@@ -10,6 +10,7 @@ mkdir -p rpm/
 
 # share
 cp ../../miscellaneous/* rpm/
+cp ../../VERSION rpm/
 
 # lib
 mkdir -p rpm/lib/

@@ -40,13 +40,14 @@ case "$1" in
     dns)
         "${BASEDIR}/dns.sh"
         ;;
-    --version)
-        version=$(cat "${BASEDIR}/version" | sed 's/-.*//')
-        echo "zjunet version: zjunet-$version"
+    version|--version)
+        version_full=`cat "${BASEDIR}/VERSION"`
+        version=$(echo $version_full | sed 's/-.*//')
+        echo "zjunet version: $version (${version_full})"
         ;;
     *)
         cat <<EOF
-zjunet: CLI Tool (VPN/WLAN/DNS) for Zjuer
+zjunet: cli tool (VPN/WLAN/DNS) for network connection in ZJU
 
 Usage: zjunet [ACTION]
 
@@ -55,7 +56,7 @@ Actions:
         add            Add a user
         list           List all enabled users
         edit           Edit a (enabled) user
-        Note: to delete/disable a user, edit /etc/xl2tpd/xl2tpd.conf yourself
+      * Note: to delete/disable a user, edit /etc/xl2tpd/xl2tpd.conf
     all
         connect(-c)    Connect VPN & ZJUWLAN, and combine them using nexthop
         disconnect(-d) Disconnect VPN & ZJUWLAN
@@ -63,11 +64,11 @@ Actions:
         connect(-c)    Connect VPN and set up ip route
         disconnect(-d) Disconnect VPN and reset ip route
     wlan
-        connect(-c)    Login ZJUWLAN via curl
-        disconnect(-d) Logout ZJUWLAN via curl
-    route              Set up ip route
-    dns                Test and set up DNS Server
-    --version          Show Version
+        connect(-c)    Login ZJUWLAN using curl
+        disconnect(-d) Logout ZJUWLAN using curl
+    route              Set up static route
+    dns [server]       Test and set up DNS Server (default: 10.10.0.21)
+    version            Display program version
 EOF
         ;;
 esac

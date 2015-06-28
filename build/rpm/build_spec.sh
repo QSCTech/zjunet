@@ -40,7 +40,7 @@ for f in *.sh; do
 echo "install -m 755 lib/$f \$RPM_BUILD_ROOT/usr/lib/zjunet/$f" >> ../zjunet.spec
 done
 cd ..
-echo 'install -m 644 lib/version $RPM_BUILD_ROOT/usr/lib/zjunet/version' >> zjunet.spec
+echo 'install -m 644 VERSION $RPM_BUILD_ROOT/usr/share/zjunet/VERSION' >> zjunet.spec
 echo 'install -m 644 qsc.public.key $RPM_BUILD_ROOT/usr/share/zjunet/qsc.public.key' >> zjunet.spec
 echo 'install -m 644 qsc.repo $RPM_BUILD_ROOT/usr/share/zjunet/qsc.repo' >> zjunet.spec
 echo "" >> zjunet.spec
@@ -50,8 +50,9 @@ echo "/usr/bin/zjunet" >> zjunet.spec
 echo "/usr/share/zjunet/qsc.public.key" >> zjunet.spec
 echo "/usr/share/zjunet/qsc.repo" >> zjunet.spec
 echo "/usr/share/zjunet/zjunet-postinst" >> zjunet.spec
+echo "/usr/share/zjunet/VERSION" >> zjunet.spec
 cd lib
-for f in *; do
+for f in *.sh; do
 echo "/usr/lib/zjunet/$f" >> ../zjunet.spec
 done
 cd ..

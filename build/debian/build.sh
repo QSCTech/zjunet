@@ -7,10 +7,11 @@ VERSION=$1
 # share
 mkdir -p ./debian/usr/share/zjunet
 cp ../../miscellaneous/* ./debian/usr/share/zjunet
+cp ../../VERSION ./debian/usr/share/zjunet
 
 # lib
 mkdir -p ./debian/usr/lib/zjunet
-cp ../../lib/* ./debian/usr/lib/zjunet
+cp ../../lib/*.sh ./debian/usr/lib/zjunet
 
 # bin
 mkdir -p ./debian/usr/bin

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=$(cat ../lib/version)
+VERSION=$(cat ../VERSION)
 
 cd rpm
 ./build.sh $VERSION
