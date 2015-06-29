@@ -28,9 +28,10 @@ zju_test_and_set_up_dns () {
 }
 
 # 浙大的DNS不是很稳定，这里列了备用方案
-# 官方 > 10.12.10.12 > Senorsen (QSC Server) DNS > ALI YUN
+# 官方 > 10.12.10.12 > Senorsen (QSC Server) DNS > 114 DNS
 zju_test_and_set_up_dns \
+    $1 \
     10.10.0.21 10.10.0.22 10.10.0.23 \
     10.12.10.12 \
-    10.202.68.43 \
+    10.202.68.73 \
     114.114.114.114

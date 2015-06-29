@@ -39,7 +39,7 @@ case "$1" in
         "${BASEDIR}/vpn.sh" $2
         ;;
     dns)
-        "${BASEDIR}/dns.sh"
+        "${BASEDIR}/dns.sh" $2
         ;;
     version|--version)
         version_full=`cat "${MISCELLDIR}/VERSION"`
