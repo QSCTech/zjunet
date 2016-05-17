@@ -67,8 +67,6 @@ case "$gateway" in
     10.189.*)
         ip route replace 10.50.200.245 via $gateway
         ;;
-    10.171.*)
-        ;;
     *)
         # 内网静态路由
         # See also: #18 (thanks Hexcles Ma)
