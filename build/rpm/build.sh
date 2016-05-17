@@ -18,7 +18,7 @@ cp ../../lib/* rpm/lib/
 
 # bin
 echo '/usr/lib/zjunet/zjunet.sh "$@"' > rpm/zjunet
-chmod +x rpm/zjunet
+install -m 755 -d ./debian/usr/bin
 
 # rpm
 ARCH="noarch"

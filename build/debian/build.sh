@@ -14,9 +14,8 @@ mkdir -p ./debian/usr/lib/zjunet
 cp ../../lib/*.sh ./debian/usr/lib/zjunet
 
 # bin
-mkdir -p ./debian/usr/bin
-echo '/usr/lib/zjunet/zjunet.sh "$@"' >> ./debian/usr/bin/zjunet
-chmod +x ./debian/usr/bin/zjunet
+install -m 755 -d ./debian/usr/bin
+install -m 755 ../../bin/zjunet ./debian/usr/bin/zjunet
 
 # postinst
 mkdir -p debian/DEBIAN
