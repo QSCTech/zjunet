@@ -42,14 +42,16 @@ case "$1" in
 
     add)
         read -p "username: " username
-        read -p "password: " password
+        read -p "password: " -s password
+		echo
         edituser $username $password
         ;;
 
     edit)
         users=$(getall)
         read -p "username [ ${users}]: " username
-        read -p "password: " password
+        read -p "password: " -s password
+		echo
         edituser $username $password
         ;;
 
