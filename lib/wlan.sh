@@ -6,6 +6,7 @@
 #
 # Copyright (C) 2014 Zhang Hai <Dreaming.in.Code.ZH@Gmail.com>
 # Copyright (C) 2014 Zeno Zeng <zenoofzeng@gmail.com>
+# Copyright (C) 2017 Wu Fan <wfwf1997@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,17 +34,26 @@ logout() {
     PASSWORD=$2
 
     echo "Logout: ${USERNAME}"
-    RESPONSE=$(curl "https://net.zju.edu.cn/rad_online.php" -H "Content-Type: application/x-www-form-urlencoded" -d "action=auto_dm&username=${USERNAME}&password=${PASSWORD}" -s)
+    RESPONSE=$(curl "https://net.zju.edu.cn/include/auth_action.php" -H "Content-Type: application/x-www-form-urlencoded" -d "action=logout&username=${USERNAME}&password=${PASSWORD}&ajax=1" -s)
 
+    if [[ $? -eq 60 ]]; then
+        CHOOSE=''
+        read -p "There's an issue with ZJUNET's CA certificates, do you want to do it anyway? [yes/NO] " CHOOSE
+        if [[ $CHOOSE == "YES" ]] || [[ $CHOOSE == "yes" ]]; then
+            RESPONSE=$(curl "https://net.zju.edu.cn/include/auth_action.php" -H "Content-Type: application/x-www-form-urlencoded" -d "action=logout&username=${USERNAME}&password=${PASSWORD}&ajax=1" -s -k)
+        fi
+    fi
+        
     case "${RESPONSE}" in
         *ok*)
             echo "Logout: success."
             ;;
-        *成功*)
+        *已断开*)
             echo "Logout: success."
             ;;
         *)
-            echo "Logout: ${RESPONSE}"
+            echo "Logout: unsuccess."
+            echo "${RESPONSE}"
             exit 1;
             ;;
     esac
@@ -53,10 +63,22 @@ login() {
     USERNAME=$1
     PASSWORD=$2
 
-    logout $USERNAME $PASSWORD
+    STATUS=$(curl http://g.cn/generate_204 -I -s | grep HTTP | awk {'print $2'})
+    if [[ STATUS -eq 204 ]]; then
+        echo "You have already logged in."
+        exit 0
+    fi
 
     echo "Login: ${USERNAME}"
-    RESPONSE=$(curl "https://net.zju.edu.cn/cgi-bin/srun_portal" -H "Content-Type: application/x-www-form-urlencoded" -d "action=login&username=${USERNAME}&password=${PASSWORD}&ac_id=3&type=1&is_ldap=1&local_auth=1" -s)
+    RESPONSE=$(curl "https://net.zju.edu.cn/include/auth_action.php" -H "Content-Type: application/x-www-form-urlencoded" -d "action=login&username=${USERNAME}&password=${PASSWORD}&ac_id=3&user_ip=&nas_ip=&user_mac=&save_me=1&ajax=1" -s)
+
+    if [[ $? -eq 60 ]]; then
+        CHOOSE=''
+        read -p "There's an issue with ZJUNET's CA certificates, do you want to do it anyway? [yes/NO] " CHOOSE
+        if [[ $CHOOSE == "YES" ]] || [[ $CHOOSE == "yes" ]]; then
+            RESPONSE=$(curl "https://net.zju.edu.cn/include/auth_action.php" -H "Content-Type: application/x-www-form-urlencoded" -d "action=login&username=${USERNAME}&password=${PASSWORD}&ac_id=3&user_ip=&nas_ip=&user_mac=&save_me=1&ajax=1" -s -k)
+        fi
+    fi
 
     case "${RESPONSE}" in
         *help.html*)
@@ -65,7 +87,13 @@ login() {
         *login_ok*)
             echo "Login: success."
             ;;
+        *E2532*)
+            echo "Login: failed. Please retry after 10s." >&2
+            echo "Login: ${RESPONSE}" >&2
+            exit 1
+            ;;
         *)
+            echo "Login: failed." >&2
             echo "Login: ${RESPONSE}" >&2
             exit 1
             ;;
