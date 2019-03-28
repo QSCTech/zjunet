@@ -34,7 +34,8 @@ echo "[INFO] Setting up ip route."
 gateway=$(ip route get 10.10.0.21 | grep via | awk '{print $3}')
 
 # Recently VPN server 10.5.1.7 has the P-t-P: 172.172.172.2, after some updates.
-devs_count=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.\|172.172.172.' | awk '{print $7}' | wc -l)
+# Mar 2019 Update: A new VPN server 10.0.2.27 has been set up.
+devs_count=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.\|172.172.172.\|10.0.2.' | awk '{print $7}' | wc -l)
 if [ "${devs_count}" -eq "0" ]; then
     dev=$(ip route get 10.10.0.21 | head -n1 | awk '{print $5}')
 
@@ -93,7 +94,8 @@ esac
 
 # NEXTHOP
 # Recently VPN server 10.5.1.7 has the P-t-P: 172.172.172.2, after some updates.
-devs=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.\|172.172.172.' | awk '{print $7}')
+# Mar 2019 Update: A new VPN server 10.0.2.27 has been set up.
+devs=$(ip addr show | grep 'inet.*ppp' | grep ' 10.5.\|172.172.172.\|10.0.2.' | awk '{print $7}')
 cmd="ip route replace default"
 for dev in $devs; do
     cmd="${cmd} nexthop dev ${dev}"

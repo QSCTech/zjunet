@@ -92,6 +92,7 @@ linkname $LAC_NAME
 logfile $PPP_LOG_FILE
 name $USERNAME
 password $PASSWORD
+mtu 1428
 EOF
     chmod 600 $PPP_OPT_FILE
 
