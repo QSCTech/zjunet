@@ -1,20 +1,22 @@
 # zjunet
 
+[查看中文README](README.zh.md)
+
 Command Line Scripts for ZJU (VPN / WLAN / DNS)
 
 ## Features
 
 - ZJU VPN (l2tp)
 
-- ZJU WLAN
+- ZJUWLAN
 
-- 路由器支持（written in Bourne Shell）
+- Router support
 
-- 多拨支持（多账户负载均衡）
+- Overlap network dialing (with load balance)
 
-- ZJUWLAN 与 ZJUVPN 带宽叠加（1 WLAN + N VPN，在 ZJUWLAN 下）
+- Overlap bandwidth of ZJUWLAN and ZJU VPN (1 WLAN + N VPN, Using ZJUWLAN) 
 
-- DNS 自动测试设置（适用于 DNS 坏掉的情况）
+- Automatic DNS setting (in case DNS do not work)
 
 ## Requirements
 
@@ -22,97 +24,116 @@ Command Line Scripts for ZJU (VPN / WLAN / DNS)
 
 - curl
 
+- `dig` (Different package on different platform)
+
 ## Install
 
 ### Debian / Ubuntu (deb)
 
-Use only one of the methods below:
+#### SUGGESTED: From QSC website's linux repository
 
-#### 1. From QSC website's linux repository
-    
-    wget -qO - https://dl.zjuqsc.com/linux/qsc.public.key | sudo apt-key add -
-    sudo wget https://dl.zjuqsc.com/linux/debian/qsc.list -O /etc/apt/sources.list.d/qsc.list
-    sudo apt-get update
-    sudo apt-get install zjunet
-    
-#### 2. Download deb
-https://github.com/QSCTech/zjunet/releases
-下载 deb，双击安装就是。
-
-### Fedora / CentOS (rpm)
-在 Releases 中下载安装方法如上。注意 CentOS 7 中需要 epel 源提供 xl2tpd 
-
-#### Install from QSC website's linux repository
-    
-    sudo wget https://dl.zjuqsc.com/linux/qsc.public.key -O /etc/pki/rpm-gpg/RPM-GPG-KEY-QSC-COMP66
-	sudo rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-QSC-COMP66
-	sudo wget https://dl.zjuqsc.com/linux/yum/qsc.repo -O /etc/yum.repos.d/qsc.repo
-	sudo yum install zjunet
-    
-
-### Openwrt
-
-https://github.com/QSCTech/zjunet/releases
-下载 opk，然后 `opkg install` 就是。
-
-### From source
-
-master分支是开发分支，请直接从 release 那里获取源码。
-
-```bash
-cd zjunet
-sudo ./install.sh
+``` bash
+curl https://dl.zjuqsc.com/linux/qsc.public.key | sudo apt-key add -
+curl https://dl.zjuqsc.com/linux/debian/qsc.list | sudo tee /etc/apt/sources.list.d/qsc.list
+sudo apt-get update
+sudo apt-get install zjunet
 ```
 
-## Known Issues
+#### Alternative: Install .deb package directly
 
-### 丢包
+Download .deb package from [Release Page](https://github.com/QSCTech/zjunet/releases),
+Click or run `sudo apt-get install ./zjunet_<version>_all.deb` to install.
 
-在有的机子上会丢包（因为用的是 nexthop ）。
-等有空了也许会换成 iptables 来解决这个问题。
+### Fedora / CentOS (rpm)
 
-### ppp0 may disappear on openwrt
+#### SUGGESTED: From QSC website's linux repository
 
-make /etc/ppp/options's lcp-echo-failure larger.
+```bash
+curl https://dl.zjuqsc.com/linux/qsc.public.key | sudo tee /etc/pki/rpm-gpg/RPM-GPG-KEY-QSC-COMP66
+curl https://dl.zjuqsc.com/linux/yum/qsc.repo | sudo tee /etc/yum.repos.d/qsc.repo
+sudo rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-QSC-COMP66
+sudo yum install zjunet
+```
 
-see also https://github.com/QSCTech/zjunet/issues/39
+#### Alternative: Install .rpm package directly
 
-## Openwrt
+Download .rpm package from [Release Page](https://github.com/QSCTech/zjunet/releases),
+Click or run `sudo yum localinstall zjunet-<version>.noarch.rpm` to install.
 
-Install xl2tpd:
+**ATTENTION** In CentOS 7, *xl2tpd* requires epel.
 
-https://downloads.openwrt.org/snapshots/trunk/ar71xx/packages/packages/
+### OpenWrt (opk)
 
-## Dev
+Download .opk package from [Release Page](https://github.com/QSCTech/zjunet/releases) (onto your router),
+Run `opkg install ./zjunet_<version>_all.opk`.
 
-QSCer 可以直接向这个 repo push 而不用发 pull request。
-有什么疑虑可以提 issue 问一下，
-或者直接来办公室找我(zenozeng)。
+### Other linux (Source Code)
 
-master分支就是开发分支。
-但是请保证bump version的时候要稳定。
+```bash
+# Under proper directory
+git clone https://github.com/QSCTech/zjunet.git
+cd zjunet
+sudo ./install.sh
+# If update is necessary, run `git pull` and `sudo ./install.sh`
+```
 
-### Build
+**ATTENTION** Requirement check will **NOT** be done running `./install.sh`.
+Please run `xl2tpd -v`, `curl -V` and `dig -v` to verify the installation.
+
+## Troubleshooting
+
+### Packet lose
+
+This is a known issue.
+When overlapping VPN and ZJUWLAN, network packet may be lost.
+(because of nexthop in routing table).
+
+Contributions to this issue are welcomed. (Maybe using `iptables`)
+
+### ppp0 may disappears on OpenWrt
+
+Set lcp-echo-failure larger in /etc/ppp/options.
+
+See also #39
+
+### Other problems?
+
+Please send mail to tech@zjuqsc.com if you have any other problem.
+
+## Contribute to this project
+
+QSCers may Push directly without sending Pull Requests。
+
+Please write an Issue if you have worries. Contact maintainer directly if necessary.
+
+**PRs from non-QSCers are also welcomed.**
+
+### Packaging Instruction
+
+*(Not finished yet)*
 
 #### Debian
 
 ```bash
-sudo apt-get install build-essential autoconf automake autotools-dev dh-make debhelper devscripts fakeroot xutils lintian pbuilder
+sudo apt-get install build-essential autoconf automake autotools-dev dh-make \
+  debhelper devscripts fakeroot xutils lintian pbuilder rpm
+cd build
+./build.sh
 ```
 
-##### see also
+##### See Also
 
 - http://www.webupd8.org/2010/01/how-to-create-deb-package-ubuntu-debian.html
 
 - http://tldp.org/HOWTO/html_single/Debian-Binary-Package-Building-HOWTO/
 
-#### Openwrt
+#### OpenWrt
 
-##### see also
+##### See Also
 
 - http://lists.openmoko.org/pipermail/devel/2008-July/000496.html
 
-## Links
+### Links
 
 - [Array in unix Bourne Shell](http://unix.stackexchange.com/questions/137566/array-in-unix-bourne-shell)
 

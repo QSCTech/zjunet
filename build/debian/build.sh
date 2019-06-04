@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 rm -rf *.deb
 
@@ -35,7 +36,7 @@ Version: $VERSION
 Section: net
 Priority: optional
 Architecture: all
-Depends: xl2tpd (>= 1.3.1), curl
+Depends: xl2tpd (>= 1.3.1), curl, dnsutils
 Maintainer: Zeno Zeng <zenoofzeng@gmail.com>
 Description: Command Line Scripts for ZJU
  This script provides a VPN / WLAN / NEXTHOP for ZJUer.

@@ -7,3 +7,7 @@
 # Rubbish
 *.swp
 
+build/debian/debian
+build/rpm/zjunet-*
+build/rpm/zjunet.spec
+build/openwrt/debian

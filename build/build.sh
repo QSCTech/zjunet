@@ -2,16 +2,22 @@
 
 VERSION=$(cat ../VERSION)
 
-cd rpm
-./build.sh $VERSION
-cd ..
+fail() {
+	echo -e "\033[31mERROR: Failed to build $1\033[0m" 1>&2
+}
 
-cd debian
-./build.sh $VERSION
-cd ..
+pushd rpm > /dev/null
+./build.sh $VERSION || fail 'RPM package'
+popd > /dev/null
 
-cd openwrt
-./build.sh $VERSION
+pushd debian > /dev/null
+./build.sh $VERSION || fail 'Debian package'
+popd > /dev/null
 
-cd ..
+pushd openwrt > /dev/null
+./build.sh $VERSION || fail 'OpenWrt package'
+popd > /dev/null
+
+echo -ne "\033[0;32m"
 find . -regextype posix-egrep -regex ".*\.(opk|deb|rpm)$"
+echo -ne "\033[0m"

@@ -13,7 +13,7 @@ echo "Group: Applications/Internet" >> zjunet.spec
 echo "URL: https://github.com/QSCTech/zjunet/" >> zjunet.spec
 echo "Vendor: Qiu Shi Chao Website of Zhejiang University" >> zjunet.spec
 echo "Packager: Senorsen <sen@senorsen.com>" >> zjunet.spec
-echo "Requires: xl2tpd >= 1.3.1, curl" >> zjunet.spec
+echo "Requires: xl2tpd >= 1.3.1, curl, dnsutils" >> zjunet.spec
 echo "BuildRoot:  %{_builddir}/%{name}-root" >> zjunet.spec
 echo "Source: %{name}-%{version}.tar.gz" >> zjunet.spec
 echo "BuildArch: noarch" >> zjunet.spec
@@ -37,7 +37,7 @@ echo 'install -m 755 zjunet $RPM_BUILD_ROOT/usr/bin/zjunet' >> zjunet.spec
 echo 'install -m 755 zjunet-postinst $RPM_BUILD_ROOT/usr/share/zjunet/zjunet-postinst' >> zjunet.spec
 cd lib
 for f in *.sh; do
-echo "install -m 755 lib/$f \$RPM_BUILD_ROOT/usr/lib/zjunet/$f" >> ../zjunet.spec
+	echo "install -m 755 lib/$f \$RPM_BUILD_ROOT/usr/lib/zjunet/$f" >> ../zjunet.spec
 done
 cd ..
 echo 'install -m 644 VERSION $RPM_BUILD_ROOT/usr/share/zjunet/VERSION' >> zjunet.spec
@@ -53,7 +53,7 @@ echo "/usr/share/zjunet/zjunet-postinst" >> zjunet.spec
 echo "/usr/share/zjunet/VERSION" >> zjunet.spec
 cd lib
 for f in *.sh; do
-echo "/usr/lib/zjunet/$f" >> ../zjunet.spec
+	echo "/usr/lib/zjunet/$f" >> ../zjunet.spec
 done
 cd ..
 echo "" >> zjunet.spec

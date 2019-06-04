@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 rm -rf *.rpm
 
@@ -28,7 +29,7 @@ rm -rf ${SEMINAME}.tar.gz
 find rpm -type d | xargs chmod 755
 rm -rf $SEMINAME
 mv rpm $SEMINAME
-tar zcvf ${SEMINAME}.tar.gz $SEMINAME
+tar zcf ${SEMINAME}.tar.gz $SEMINAME
 mkdir -p $HOME/rpmbuild/SOURCES
 cp ${SEMINAME}.tar.gz $HOME/rpmbuild/SOURCES
 cp build_spec.sh $SEMINAME/
