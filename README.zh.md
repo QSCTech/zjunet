@@ -28,32 +28,14 @@
 
 ### Debian / Ubuntu (deb)
 
-#### 推荐：从求是潮网站的仓库下载
-
-``` bash
-curl https://dl.zjuqsc.com/linux/qsc.public.key | sudo apt-key add -
-curl https://dl.zjuqsc.com/linux/debian/qsc.list | sudo tee /etc/apt/sources.list.d/qsc.list
-sudo apt-get update
-sudo apt-get install zjunet
-```
-
-#### 替代方案：直接安装 deb 包
+#### 直接安装 deb 包
 
 从 [Releases 页](https://github.com/QSCTech/zjunet/releases) 下载 deb 包，
 双击安装或运行 `sudo apt-get install ./zjunet_（版本）_all.deb` 。
 
 ### Fedora / CentOS (rpm)
 
-#### 推荐：从求是潮网站的仓库下载
-
-```bash
-curl https://dl.zjuqsc.com/linux/qsc.public.key | sudo tee /etc/pki/rpm-gpg/RPM-GPG-KEY-QSC-COMP66
-curl https://dl.zjuqsc.com/linux/yum/qsc.repo | sudo tee /etc/yum.repos.d/qsc.repo
-sudo rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-QSC-COMP66
-sudo yum install zjunet
-```
-
-#### 替代方案：直接安装 rpm 包
+#### 直接安装 rpm 包
 
 从 [Releases 页](https://github.com/QSCTech/zjunet/releases) 下载 rpm 包，
 双击安装或运行 `sudo yum localinstall zjunet-（版本）.noarch.rpm` 。

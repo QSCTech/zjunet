@@ -30,32 +30,14 @@ Command Line Scripts for ZJU (VPN / WLAN / DNS)
 
 ### Debian / Ubuntu (deb)
 
-#### SUGGESTED: From QSC website's linux repository
-
-``` bash
-curl https://dl.zjuqsc.com/linux/qsc.public.key | sudo apt-key add -
-curl https://dl.zjuqsc.com/linux/debian/qsc.list | sudo tee /etc/apt/sources.list.d/qsc.list
-sudo apt-get update
-sudo apt-get install zjunet
-```
-
-#### Alternative: Install .deb package directly
+#### Install .deb package directly
 
 Download .deb package from [Release Page](https://github.com/QSCTech/zjunet/releases),
 Click or run `sudo apt-get install ./zjunet_<version>_all.deb` to install.
 
 ### Fedora / CentOS (rpm)
 
-#### SUGGESTED: From QSC website's linux repository
-
-```bash
-curl https://dl.zjuqsc.com/linux/qsc.public.key | sudo tee /etc/pki/rpm-gpg/RPM-GPG-KEY-QSC-COMP66
-curl https://dl.zjuqsc.com/linux/yum/qsc.repo | sudo tee /etc/yum.repos.d/qsc.repo
-sudo rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-QSC-COMP66
-sudo yum install zjunet
-```
-
-#### Alternative: Install .rpm package directly
+#### Install .rpm package directly
 
 Download .rpm package from [Release Page](https://github.com/QSCTech/zjunet/releases),
 Click or run `sudo yum localinstall zjunet-<version>.noarch.rpm` to install.
