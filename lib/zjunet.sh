@@ -19,7 +19,7 @@
 # <http://www.gnu.org/licenses/>.
 
 BASEDIR=$(dirname $0)
-MISCELLDIR="/usr/share/zjunet"
+MISCELLDIR="$BASEDIR/../../share/zjunet"
 
 case "$1" in
     route)
