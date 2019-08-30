@@ -22,54 +22,61 @@ BASEDIR=$(dirname $0)
 MISCELLDIR="$BASEDIR/../../share/zjunet"
 
 case "$1" in
-    route)
+    r|route)
         "${BASEDIR}/sudo.sh" "${BASEDIR}/route.sh"
         ;;
-    user)
+    u|user)
         "${BASEDIR}/user.sh" $2
         ;;
-    all)
+    a|all)
         "${BASEDIR}/wlan.sh" $2
         "${BASEDIR}/vpn.sh" $2
         ;;
-    wlan)
+    w|wlan)
         "${BASEDIR}/wlan.sh" $2
         ;;
-    vpn)
+    v|vpn)
         "${BASEDIR}/vpn.sh" $2
         ;;
-    dns)
+    d|dns)
         "${BASEDIR}/dns.sh" $2
         ;;
-    version|--version)
+    -v|version|--version)
         version_full=`cat "${MISCELLDIR}/VERSION"`
         version=$(echo $version_full | sed 's/-.*//')
         echo "zjunet version: $version (${version_full})"
         ;;
     *)
         cat <<EOF
-zjunet: cli tool (VPN/WLAN/DNS) for network connection in ZJU
+zjunet: CLI tool (VPN/WLAN/DNS) for network connection in ZJU
 
 Usage: zjunet [ACTION]
 
 Actions:
-    user
-        add            Add a user
-        list           List all enabled users
-        edit           Edit a (enabled) user
+    user, u
+        add              Add a user
+        list             List all enabled users
+        edit             Edit a (enabled) user
       * Note: to delete/disable a user, edit /etc/xl2tpd/xl2tpd.conf
-    all
-        connect(-c)    Connect VPN & ZJUWLAN, and combine them using nexthop
-        disconnect(-d) Disconnect VPN & ZJUWLAN
-    vpn
-        connect(-c)    Connect VPN and set up ip route
-        disconnect(-d) Disconnect VPN and reset ip route
-    wlan
-        connect(-c)    Login ZJUWLAN using curl
-        disconnect(-d) Logout ZJUWLAN using curl
-    route              Set up static route
-    dns [server]       Test and set up DNS Server (default: 10.10.0.21)
-    version            Display program version
+    all, a
+        connect, -c      Connect VPN & ZJUWLAN, and combine them using nexthop
+        disconnect, -d   Disconnect VPN & ZJUWLAN
+    vpn, v
+        connect, -c      Connect VPN and set up ip route
+        disconnect, -d   Disconnect VPN and reset ip route
+    wlan, w
+        connect, -c      Login ZJUWLAN using curl
+        disconnect, -d   Logout ZJUWLAN using curl
+        disable          Disable WLAN capability
+    route, r             Set up static route
+    dns [ip], d [ip]     Test and set up DNS Server (default: 10.10.0.21)
+    version, -v          Display program version
+
+Example:
+    zjunet user add      Add a new user
+    zjunet vpn -c        Connect VPN
+    zjunet vpn -d        Disconnect VPN
+    zjunet wlan disable  Completely disable WLAN capatibility
 EOF
         ;;
 esac

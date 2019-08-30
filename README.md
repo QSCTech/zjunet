@@ -26,37 +26,60 @@ Command Line Scripts for ZJU (VPN / WLAN / DNS)
 
 - `dig` (Different package on different platform)
 
-## Install
+## Installation
+
+If you meet any problem during or after the installation, check Troubleshooting section below in this documentation.
 
 ### Debian / Ubuntu (deb)
 
-#### Install .deb package directly
+1. Configure ZJU mirrors using [浙大源配置生成器](https://mirrors.zju.edu.cn/#generator).
+2. Run these command.
 
-Download .deb package from [Release Page](https://github.com/QSCTech/zjunet/releases),
-Click or run `sudo apt-get install ./zjunet_<version>_all.deb` to install.
+``` bash
+curl https://dl.zjuqsc.com/linux/qsc.public.key | sudo apt-key add -
+curl https://dl.zjuqsc.com/linux/debian/qsc.list | sudo tee /etc/apt/sources.list.d/qsc.list
+sudo apt-get update
+sudo apt-get install zjunet
+```
+
+3. The installation has completed.
+4. If you are setting up a server, we suggest you run `zjunet wlan disable` to disable WLAN capability.
 
 ### Fedora / CentOS (rpm)
 
-#### Install .rpm package directly
+1. Configure ZJU mirrors using [浙大源配置生成器](https://mirrors.zju.edu.cn/#generator).
+2. Configure [EPEL of ZJU mirrors](https://mirrors.zju.edu.cn/epel/) (Taking CentOS installation as an example)
+	1. Run `yum install epel-release` to install EPEL.
+	2. Edit `/etc/yum.repos.d/epel.repo` , uncomment lines begin with `#baseurl=` (Remove leading `#` sign) and comment lines begin with `mirrorlist=` (Prepend `#` sign)
+	3. Edit `/etc/yum.repos.d/epel.repo` , replace `https://download.fedoraproject.org/pub` with `https://mirrors.zju.edu.cn` .
 
-Download .rpm package from [Release Page](https://github.com/QSCTech/zjunet/releases),
-Click or run `sudo yum localinstall zjunet-<version>.noarch.rpm` to install.
+3. Run these command.
 
-**ATTENTION** In CentOS 7, *xl2tpd* requires epel.
+```bash
+curl https://dl.zjuqsc.com/linux/qsc.public.key | sudo tee /etc/pki/rpm-gpg/RPM-GPG-KEY-QSC-COMP66
+curl https://dl.zjuqsc.com/linux/yum/qsc.repo | sudo tee /etc/yum.repos.d/qsc.repo
+sudo rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-QSC-COMP66
+sudo yum install zjunet
+```
+
+4. The installation has completed.
+5. If you are setting up a server, we suggest you run `zjunet wlan disable` to disable WLAN capability.
 
 ### OpenWrt (opk)
 
 Download .opk package from [Release Page](https://github.com/QSCTech/zjunet/releases) (onto your router),
 Run `opkg install ./zjunet_<version>_all.opk`.
 
-### Other linux (Source Code)
+### Other Linux (Build from source code)
 
 ```bash
+xl2tpd -v; curl -V; dig -v # Check installation of dependencies. There should be 3 version numbers.
 # Under proper directory
 git clone https://github.com/QSCTech/zjunet.git
 cd zjunet
 sudo ./install.sh
 # If update is necessary, run `git pull` and `sudo ./install.sh`
+# If you are setting up a server, we suggest you run `zjunet wlan disable` to disable WLAN capability.
 ```
 
 **ATTENTION** Requirement check will **NOT** be done running `./install.sh`.

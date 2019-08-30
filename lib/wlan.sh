@@ -24,10 +24,17 @@
 
 BASEDIR=$(dirname $0)
 
+DISABLE_CHECK=${BASEDIR}/.disable-wlan
+
 USER="${BASEDIR}/user.sh"
 
 USERNAME=$($USER get)
 PASSWORD=$($USER getpwd $USERNAME)
+
+if [[ -f "${DISABLE_CHECK}" ]]; then
+    echo WLAN function has been disabled.;
+    exit 1;
+fi
 
 logout() {
     USERNAME=$1
@@ -94,7 +101,11 @@ login() {
             ;;
         *)
             echo "Login: failed." >&2
-            echo "Login: ${RESPONSE}" >&2
+            if [[ -z "${RESPONSE}" ]]; then
+                echo "Login: (Empty response)" >&2
+            else
+                echo "Login: ${RESPONSE}" >&2
+            fi
             exit 1
             ;;
     esac
@@ -102,14 +113,21 @@ login() {
 
 
 case "$1" in
-    disconnect)
+    d|-d|disconnect)
         logout $USERNAME $PASSWORD
         ;;
-    -d)
-        logout $USERNAME $PASSWORD
-        ;;
-    *)
+
+    ""|c|-c|connect)
         login $USERNAME $PASSWORD
+        ;;
+
+    disable)
+        "${BASEDIR}/sudo.sh" touch "${DISABLE_CHECK}"
+        exit 0
+        ;;
+
+    *)
+        echo Invalid subcommand \"$1\" for \`zjunet wlan\`. Run \`zjunet usage\` for help.
         ;;
 esac
 

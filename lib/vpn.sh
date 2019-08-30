@@ -65,18 +65,18 @@ connect() {
 
 case "$1" in
 
-    -d)
+    d|-d|disconnect)
         disconnect
         ;;
 
-    disconnect)
-        disconnect
-        ;;
-
-    *)
+    ""|c|-c|connect)
         disconnect
         sleep 3
         connect
+        ;;
+
+    *)
+        echo Invalid subcommand \"$1\" for \`zjunet vpn\`. Run \`zjunet usage\` for help.
         ;;
 
 esac
