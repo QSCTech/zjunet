@@ -31,7 +31,7 @@ USER="${BASEDIR}/user.sh"
 USERNAME=$($USER get)
 PASSWORD=$($USER getpwd $USERNAME)
 
-if [[ -f "${DISABLE_CHECK}" ]]; then
+if [ -f "${DISABLE_CHECK}" ]; then
     echo WLAN function has been disabled.;
     exit 1;
 fi
@@ -43,10 +43,10 @@ logout() {
     echo "Logout: ${USERNAME}"
     RESPONSE=$(curl "https://net.zju.edu.cn/include/auth_action.php" -H "Content-Type: application/x-www-form-urlencoded" -d "action=logout&username=${USERNAME}&password=${PASSWORD}&ajax=1" -s)
 
-    if [[ $? -eq 60 ]]; then
+    if [ $? -eq 60 ]; then
         CHOOSE=''
         read -p "There's an issue with ZJUNET's CA certificates, do you want to do it anyway? [yes/NO] " CHOOSE
-        if [[ $CHOOSE == "YES" ]] || [[ $CHOOSE == "yes" ]]; then
+        if [ $CHOOSE = "YES" ] || [ $CHOOSE = "yes" ]; then
             RESPONSE=$(curl "https://net.zju.edu.cn/include/auth_action.php" -H "Content-Type: application/x-www-form-urlencoded" -d "action=logout&username=${USERNAME}&password=${PASSWORD}&ajax=1" -s -k)
         fi
     fi
@@ -71,7 +71,7 @@ login() {
     PASSWORD=$2
 
     STATUS=$(curl http://g.cn/generate_204 -I -s | grep HTTP | awk {'print $2'})
-    if [[ STATUS -eq 204 ]]; then
+    if [ STATUS -eq 204 ]; then
         echo "You have already logged in."
         exit 0
     fi
@@ -79,10 +79,10 @@ login() {
     echo "Login: ${USERNAME}"
     RESPONSE=$(curl "https://net.zju.edu.cn/include/auth_action.php" -H "Content-Type: application/x-www-form-urlencoded" -d "action=login&username=${USERNAME}&password=${PASSWORD}&ac_id=3&user_ip=&nas_ip=&user_mac=&save_me=1&ajax=1" -s)
 
-    if [[ $? -eq 60 ]]; then
+    if [ $? -eq 60 ]; then
         CHOOSE=''
         read -p "There's an issue with ZJUNET's CA certificates, do you want to do it anyway? [yes/NO] " CHOOSE
-        if [[ $CHOOSE == "YES" ]] || [[ $CHOOSE == "yes" ]]; then
+        if [ $CHOOSE = "YES" ] || [ $CHOOSE = "yes" ]; then
             RESPONSE=$(curl "https://net.zju.edu.cn/include/auth_action.php" -H "Content-Type: application/x-www-form-urlencoded" -d "action=login&username=${USERNAME}&password=${PASSWORD}&ac_id=3&user_ip=&nas_ip=&user_mac=&save_me=1&ajax=1" -s -k)
         fi
     fi
@@ -101,7 +101,7 @@ login() {
             ;;
         *)
             echo "Login: failed." >&2
-            if [[ -z "${RESPONSE}" ]]; then
+            if [ -z "${RESPONSE}" ]; then
                 echo "Login: (Empty response)" >&2
             else
                 echo "Login: ${RESPONSE}" >&2
