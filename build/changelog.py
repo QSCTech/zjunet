@@ -54,7 +54,7 @@ def get_author(name):
     return data
 
 def get_changelog(owner, name):
-    print('Reading releases of {2} in {1}'.format(owner, name), flush=True, file=sys.stderr)
+    print('Reading releases of {1} in {0}'.format(owner, name), flush=True, file=sys.stderr)
     releases = api_get('repos/{}/{}/releases'.format(owner, name))
     releases = filter(lambda v: not v['draft'] and not v['prerelease'], releases)
 
