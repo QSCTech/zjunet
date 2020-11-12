@@ -70,6 +70,13 @@ sudo yum install zjunet
 Download .opk package from [Release Page](https://github.com/QSCTech/zjunet/releases) (onto your router),
 Run `opkg install ./zjunet_<version>_all.opk`.
 
+### Arch Linux (AUR)
+
+Simply run `yay zjunet` to build the package from AUR and install it.
+
+Keep in mind that a fresh install without internet connection is almost impossible.
+Please complete installation before connecting to the intranet.
+
 ### Other Linux (Build from source code)
 
 ```bash

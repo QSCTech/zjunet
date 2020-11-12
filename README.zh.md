@@ -73,6 +73,13 @@ sudo yum install zjunet
 从 [Releases 页](https://github.com/QSCTech/zjunet/releases) 下载 opk 包到路由器上，
 运行 `opkg install ./zjunet_（版本）_all.opk` 。
 
+### Arch Linux (AUR)
+
+直接运行 `yay zjunet` 即可下载并安装。
+
+请记住，在没有互联网连接的环境中是几乎不可能安装好的。
+请在连接到校内网前，在有互联网连接的环境中先完成安装。
+
 ### 其他 Linux (源代码安装)
 
 ```bash
