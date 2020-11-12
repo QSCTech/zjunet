@@ -1,18 +1,43 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
+from __future__ import print_function
+
 import os
 import sys
 import json
-import urllib3
 import base64
 import datetime
 
-def get_time(s):
-    if 'fromisoformat' in dir(datetime.datetime):
-        return datetime.datetime.fromisoformat(s.replace('Z', '+00:00'))
-    else:
-        return __import__('dateutil.parser').parser.parse(s)
+reload(sys)
+sys.setdefaultencoding('utf8')
 
-http = urllib3.PoolManager()
+try:
+    import urllib3
+    http = urllib3.PoolManager()
+    def makereq(url, headers):
+        return http.request('GET', url, headers=headers)
+except ImportError:
+    import urllib2 as request
+    class MyResponse:
+        def __init__(self, status, data):
+            self.status = status
+            self.data = data
+    def makereq(url, headers):
+        f = request.urlopen(request.Request(url, headers=headers))
+        return MyResponse(f.getcode(), f.read().decode('utf-8'))
+
+
+if 'fromisoformat' in dir(datetime.datetime):
+    def get_time(s):
+        return datetime.datetime.fromisoformat(s.replace('Z', '+00:00'))
+else:
+    try:
+        from dateutil.parser import parser
+        def get_time(s):
+            return parser().parse(s)
+    except ImportError:
+        def get_time(s):
+            return datetime.datetime.strptime(s, "%Y-%m-%dT%H:%M:%SZ")
+
 
 GITHUB_AUTH = None
 tok = os.getenv('GITHUB_TOKEN')
@@ -30,7 +55,7 @@ def get(url):
     }
     if GITHUB_AUTH is not None:
         headers['Authorization'] = GITHUB_AUTH
-    r = http.request('GET', url, headers=headers)
+    r = makereq(url, headers=headers)
     assert r.status // 100 == 2, 'HTTP Status {} != 2xx while requesting {}'.format(r.status, url)
     if r.status != 200:
         print('WARNING: HTTP {} while requesting {}'.format(r.status, url))
@@ -43,18 +68,18 @@ author_cache = {}
 def get_author(name):
     if name in author_cache:
         return author_cache[name]
-    print('Reading data for {}'.format(name), end=' : ', flush=True, file=sys.stderr)
+    print('Reading data for {}'.format(name), end=' : ', file=sys.stderr)
     data = api_get('users/{}'.format(name))
     data = {
         'name': data['name'],
         'email': data['email'],
     }
     author_cache[name] = data
-    print('{} <{}>'.format(data['name'], data['email']), flush=True, file=sys.stderr)
+    print('{} <{}>'.format(data['name'], data['email']), file=sys.stderr)
     return data
 
 def get_changelog(owner, name):
-    print('Reading releases of {1} in {0}'.format(owner, name), flush=True, file=sys.stderr)
+    print('Reading releases of {1} in {0}'.format(owner, name), file=sys.stderr)
     releases = api_get('repos/{}/{}/releases'.format(owner, name))
     releases = filter(lambda v: not v['draft'] and not v['prerelease'], releases)
 
@@ -89,13 +114,13 @@ class ChangeLog:
                 rel += item['changes'] + '\n'
         return rel
 
-available_formats = dir(ChangeLog)
+available_formats = list(filter(lambda v: v[0] != '_', dir(ChangeLog)))
 
 if len(sys.argv) != 2:
-    print('Usage: {} <format>\nAvailable formats: {}'.format(sys.argv[0], ','.join(ChangeLog)))
+    print('Usage: {} <format>\nAvailable formats: {}'.format(sys.argv[0], ','.join(available_formats)))
 else:
     changelog = get_changelog('QSCTech', 'zjunet')
     if hasattr(changelog, sys.argv[1]):
         print(getattr(changelog, sys.argv[1])())
     else:
-        print('Invalid format {}\nAvailable formats: {}'.format())
+        print('Invalid format {}\nAvailable formats: {}'.format(','.join(available_formats)))
