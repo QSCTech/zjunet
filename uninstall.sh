@@ -1,4 +1,6 @@
 #!/bin/sh
 
-rm -rIv /usr/local/lib/zjunet
-rm -iv /usr/local/bin/zjunet
+PREFIX=/usr/local
+
+rm -rIv $PREFIX/lib/zjunet
+rm -iv $PREFIX/bin/zjunet

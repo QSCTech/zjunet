@@ -7,17 +7,17 @@ if [ -z "$PREFIX" ]; then
 	PREFIX=/usr/local
 fi
 
-mkdir -p $PREFIX/lib/zjunet
-cp -rf $BASEDIR/* $PREFIX/lib/zjunet
-mkdir -p $PREFIX/bin
-mkdir -p $PREFIX/share/zjunet
-ln -fs ../../share/zjunet/VERSION $PREFIX/lib/zjunet/VERSION
-cp -f VERSION $PREFIX/share/zjunet
-cat > $PREFIX/bin/zjunet << EOF
+mkdir -p $DESTDIR$PREFIX/lib/zjunet
+cp -rf $BASEDIR/* $DESTDIR$PREFIX/lib/zjunet
+mkdir -p $DESTDIR$PREFIX/bin
+mkdir -p $DESTDIR$PREFIX/share/zjunet
+ln -fs ../../share/zjunet/VERSION $DESTDIR$PREFIX/lib/zjunet/VERSION
+cp -f VERSION $DESTDIR$PREFIX/share/zjunet
+cat > $DESTDIR$PREFIX/bin/zjunet << EOF
 #!/bin/sh
 $PREFIX/lib/zjunet/zjunet.sh "\$@"
 EOF
-chmod +x $PREFIX/bin/zjunet
+chmod +x $DESTDIR$PREFIX/bin/zjunet
 echo "[INFO] Done."
 echo
 zjunet usage
