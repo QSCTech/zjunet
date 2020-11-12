@@ -5,7 +5,10 @@ name: Packaging
 # Controls when the action will run. Triggers the workflow when releases created or modified
 on:
   release:
-    types: [created, edited]
+    types:
+      - created
+      - edited
+  workflow_dispatch:
 
 jobs:
   build:
