@@ -26,7 +26,7 @@ Version: $VERSION
 Section: net
 Priority: optional
 Architecture: all
-Depends: xl2tpd (>= 1.3.1), curl, bind-dig
+Depends: xl2tpd (>= 1.3.7), curl, bind-dig
 Maintainer: Tespent <me@tespent.cn>
 Description: Command Line Scripts for ZJU
  This script provides a VPN / WLAN / NEXTHOP for ZJUer.

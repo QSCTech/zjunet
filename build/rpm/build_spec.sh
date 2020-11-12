@@ -13,7 +13,7 @@ echo "Group: Applications/Internet" >> zjunet.spec
 echo "URL: https://github.com/QSCTech/zjunet/" >> zjunet.spec
 echo "Vendor: Qiu Shi Chao Website of Zhejiang University" >> zjunet.spec
 echo "Packager: Tespent <me@tespent.cn>" >> zjunet.spec
-echo "Requires: xl2tpd >= 1.3.1, curl, bind-utils" >> zjunet.spec
+echo "Requires: xl2tpd >= 1.3.7, curl, bind-utils" >> zjunet.spec
 echo "BuildRoot:  %{_builddir}/%{name}-root" >> zjunet.spec
 echo "Source: %{name}-%{version}.tar.gz" >> zjunet.spec
 echo "BuildArch: noarch" >> zjunet.spec
@@ -63,23 +63,5 @@ echo "" >> zjunet.spec
 echo "%post" >> zjunet.spec
 echo "/usr/share/zjunet/zjunet-postinst || true" >> zjunet.spec
 echo "" >> zjunet.spec
-echo "%changelog" >> zjunet.spec
-echo "* Sun Feb 08 2015 Senorsen <sen@senorsen.com> - 0.2.4" >> zjunet.spec
-echo "- Genrate debian and opkg packages using fakeroot (in case of wrong uid)" >> zjunet.spec
-echo "- Replace test IP with a more stable one" >> zjunet.spec
-echo "* Sun Nov 23 2014 Zeno Zeng <zenoofzeng@gmail.com> - 0.2.3" >> zjunet.spec
-echo "- build.sh & zjunet.sh now share lib/version" >> zjunet.spec
-echo "- fork when calling xl2tpd-control" >> zjunet.spec
-echo "* Sat Nov 22 2014 Senorsen <sen@senorsen.com> - 0.2.2" >> zjunet.spec
-echo "- P-t-P server address issues" >> zjunet.spec
-echo "- comment typo fixed" >> zjunet.spec
-echo "* Wed Nov 12 2014 Zeno Zeng <zenoofzeng@gmail.com> - 0.2.1" >> zjunet.spec
-echo "- xqyww123 fixed the compatibility with systemd" >> zjunet.spec
-echo "- chaosink fixed the string escape problem in user.sh" >> zjunet.spec
-echo "* Wed Oct 15 2014 Zeno Zeng <zenoofzeng@gmail.com> - 0.2.0" >> zjunet.spec
-echo "- Use xl2tpd.conf, abandon \$HOME/.zjunet/" >> zjunet.spec
-echo "- Setup route after connect / disconnect wlan" >> zjunet.spec
-echo "* Mon Oct 13 2014 Zeno Zeng <zenoofzeng@gmail.com> - 0.1.2" >> zjunet.spec
-echo "* Thu Oct 02 2014 Zeno Zeng <zenoofzeng@gmail.com> - 0.1.0" >> zjunet.spec
-echo "- Initial version of the package" >> zjunet.spec
+../changelog.py rpm >> zjunet.spec
 
