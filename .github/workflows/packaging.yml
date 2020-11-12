@@ -28,6 +28,6 @@ jobs:
         with:
           name: Release Packages
           path: |
-            build/debain/*.deb
-            build/rpm/*.rpm
-            build/openwrt/*.opk
+            build/debian/zjunet_*.deb
+            build/rpm/zjunet_*.rpm
+            build/openwrt/zjunet_*.opk
