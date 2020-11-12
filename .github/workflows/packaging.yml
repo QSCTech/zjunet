@@ -1,0 +1,30 @@
+# This workflow build packages for release
+
+name: Packaging
+
+# Controls when the action will run. Triggers the workflow when releases created or modified
+on:
+  release:
+    types: [created, edited]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Build Packages
+        run: |
+          cd build
+          ./build.sh
+
+      - name: Archive Packages
+        uses: actions/upload-artifact@v2
+        with:
+          name: Release Packages
+          path: |
+            build/debain/*.deb
+            build/rpm/*.rpm
+            build/openwrt/*.opk
