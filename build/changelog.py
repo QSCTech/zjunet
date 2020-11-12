@@ -7,8 +7,9 @@ import json
 import base64
 import datetime
 
-reload(sys)
-sys.setdefaultencoding('utf8')
+if sys.version_info.major < 3:
+    reload(sys)
+    sys.setdefaultencoding('utf8')
 
 try:
     import urllib3
