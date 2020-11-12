@@ -115,14 +115,14 @@ EOF
 xl2tpd_connect() {
     echo "[INFO] try connecting $1"
     pkill xl2tpd-control > /dev/null
-    xl2tpd-control connect $1 &
+    xl2tpd-control connect-lac $1 &
     echo "[INFO] xl2tpd-control done"
 }
 
 xl2tpd_disconnect() {
     echo "[INFO] try disconnecting $1"
     pkill xl2tpd-control > /dev/null
-    xl2tpd-control disconnect $1 &
+    xl2tpd-control disconnect-lac $1 &
     echo "[INFO] xl2tpd-control done"
 }
 

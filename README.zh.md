@@ -90,14 +90,6 @@ sudo ./install.sh
 
 ## 疑难解答
 
-### 出现了 `xl2tpd-control error: no such command` 的情况
-
-问题源于xl2tpd-control的命令参数列表更新。
-
-可以先使用temp分支解决问题。
-
-期待热心人士能够增加根据xl2tpd版本使用不同命令的功能。
-
 ### 出现了 `xl2tpd-control: command not found` 的提示但直接运行 `xl2tpd-control` 有效
 
 出现这种情况通常是由于 `sudo` 的 `secure path` 被启用。
