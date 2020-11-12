@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 VERSION=$1
 REALVERSION=`echo "$VERSION" | cut -d'-' -f1`
@@ -63,5 +63,5 @@ echo "" >> zjunet.spec
 echo "%post" >> zjunet.spec
 echo "/usr/share/zjunet/zjunet-postinst || true" >> zjunet.spec
 echo "" >> zjunet.spec
-../changelog.py rpm >> zjunet.spec
 
+../../changelog.py rpm >> zjunet.spec

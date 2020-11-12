@@ -8,7 +8,7 @@ import datetime
 
 def get_time(s):
     if 'fromisoformat' in dir(datetime.datetime):
-        return datetime.datetime.fromisoformat(s)
+        return datetime.datetime.fromisoformat(s.replace('Z', '+00:00'))
     else:
         return __import__('dateutil.parser').parser.parse(s)
 
@@ -54,7 +54,7 @@ def get_author(name):
     return data
 
 def get_changelog(owner, name):
-    print('Reading releases of {} in {}'.format(owner, name), flush=True, file=sys.stderr)
+    print('Reading releases of {1} in {0}'.format(owner, name), flush=True, file=sys.stderr)
     releases = api_get('repos/{}/{}/releases'.format(owner, name))
     releases = filter(lambda v: not v['draft'] and not v['prerelease'], releases)
 
