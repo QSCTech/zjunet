@@ -18,6 +18,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '^3.7' # request python 3.7+ for datetime.datetime.fromisoformat
+
       - name: Build Packages
         run: |
           cd build
