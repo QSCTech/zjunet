@@ -17,7 +17,7 @@ FILE_SHA1=$(sha1sum $PKGNAME-$PKGVER.tar.gz | cut -f1 -d' ')
 FILE_SHA256=$(sha256sum $PKGNAME-$PKGVER.tar.gz | cut -f1 -d' ')
 
 cat > PKGBUILD <<EOF
-# Maintainer: tespent <me@tespent.cn>
+# Maintainer: Wu Yufei <me@tespent.cn>
 
 pkgname=$PKGNAME
 pkgver=$PKGVER_NOREL
