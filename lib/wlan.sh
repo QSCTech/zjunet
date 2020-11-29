@@ -71,7 +71,7 @@ login() {
     PASSWORD=$2
 
     STATUS=$(curl http://g.cn/generate_204 -I -s | grep HTTP | awk {'print $2'})
-    if [ STATUS -eq 204 ]; then
+    if [ $STATUS -eq 204 ]; then
         echo "You have already logged in."
         exit 0
     fi
