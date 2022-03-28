@@ -35,7 +35,7 @@
 
 ### Debian / Ubuntu (deb)
 
-1. 使用 [浙大源配置生成器](https://mirrors.zju.edu.cn/#generator) 生成需要的浙大源配置，并按照提示将 `/etc/apt/sources.list` 替换为显示的内容。
+1. 使用 [浙大源配置生成器](https://mirrors.zju.edu.cn/old.html#generator) 生成需要的浙大源配置，并按照提示将 `/etc/apt/sources.list` 替换为显示的内容。
 2. 依次输入并执行下列命令：
 
 ``` bash
@@ -50,7 +50,7 @@ sudo apt-get install zjunet
 
 ### Fedora / CentOS (rpm)
 
-1. 使用 [浙大源配置生成器](https://mirrors.zju.edu.cn/#generator) 生成需要的浙大源配置，并按照提示修改 `/etc/yum.repos.d` 中的文件。
+1. 使用 [浙大源配置生成器](https://mirrors.zju.edu.cn/old.html#generator) 生成需要的浙大源配置，并按照提示修改 `/etc/yum.repos.d` 中的文件。
 2. 执行这些步骤以使用 [浙大源 EPEL](https://mirrors.zju.edu.cn/epel/) （以 CentOS 为例）：
 	1. 运行 `yum install epel-release` 以安装 EPEL 。
 	2. 编辑 `/etc/yum.repos.d/epel.repo` ，将所有以 `#baseurl=` 开头的行取消注释（删除行首 `#` 符号）并注释以 `mirrorlist=` 开头的行（在行首添加 `#` 符号）
