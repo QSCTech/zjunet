@@ -32,7 +32,7 @@ If you meet any problem during or after the installation, check Troubleshooting 
 
 ### Debian / Ubuntu (deb)
 
-1. Configure ZJU mirrors using [浙大源配置生成器](https://mirrors.zju.edu.cn/old.html#generator).
+1. Configure ZJU mirrors from manual. [Ubuntu](https://mirror.zju.edu.cn/docs/ubuntu/)/[Debian](https://mirror.zju.edu.cn/docs/debian/)
 2. Run these command.
 
 ``` bash
@@ -47,7 +47,7 @@ sudo apt-get install zjunet
 
 ### Fedora / CentOS (rpm)
 
-1. Configure ZJU mirrors using [浙大源配置生成器](https://mirrors.zju.edu.cn/old.html#generator).
+1. Configure ZJU mirrors from manual. [Fedora](https://mirror.zju.edu.cn/docs/fedora/)/[CentOS](https://mirror.zju.edu.cn/docs/centos/)
 2. Configure [EPEL of ZJU mirrors](https://mirrors.zju.edu.cn/epel/) (Taking CentOS installation as an example)
 	1. Run `yum install epel-release` to install EPEL.
 	2. Edit `/etc/yum.repos.d/epel.repo` , uncomment lines begin with `#baseurl=` (Remove leading `#` sign) and comment lines begin with `mirrorlist=` (Prepend `#` sign)
