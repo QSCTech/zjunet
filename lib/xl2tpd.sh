@@ -143,14 +143,18 @@ xl2tpd_waituser() {
         fi
         echo -n > $PPP_LOG_FILE
 
-        pid="/var/run/ppp-${LAC_NAME}.pid"
-        if [ -e $pid ]; then
-            ppp=$(cat $pid | grep ppp)
-            if ip addr show | grep "inet.*${ppp}" > /dev/null; then
-                ip addr show | grep "inet.*${ppp}" | sed 's/^ */[VPN] /'
-                return
+        for pid in "/var/run/ppp-${LAC_NAME}.pid" \
+                   "/var/run/pppdppp-${LAC_NAME}.pid" \
+                   "/var/run/pppd/ppp-${LAC_NAME}.pid"; do
+            if [ -e $pid ]; then
+                ppp=$(cat $pid | grep ppp)
+                if ip addr show | grep "inet.*${ppp}" > /dev/null; then
+                    ip addr show | grep "inet.*${ppp}" | sed 's/^ */[VPN] /'
+                    return
+                fi
+                break
             fi
-        fi
+        done
 
     done
 
