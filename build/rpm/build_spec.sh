@@ -12,7 +12,7 @@ echo "License: GPL" >> zjunet.spec
 echo "Group: Applications/Internet" >> zjunet.spec
 echo "URL: https://github.com/QSCTech/zjunet/" >> zjunet.spec
 echo "Vendor: Qiu Shi Chao Website of Zhejiang University" >> zjunet.spec
-echo "Packager: Tespent <me@tespent.cn>" >> zjunet.spec
+echo "Packager: Azuk 443 <me@azuk.top>" >> zjunet.spec
 echo "Requires: xl2tpd >= 1.3.7, curl, bind-utils" >> zjunet.spec
 echo "BuildRoot:  %{_builddir}/%{name}-root" >> zjunet.spec
 echo "Source: %{name}-%{version}.tar.gz" >> zjunet.spec

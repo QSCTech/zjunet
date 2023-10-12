@@ -37,8 +37,8 @@ Section: net
 Priority: optional
 Architecture: all
 Depends: xl2tpd (>= 1.3.7), curl, dnsutils
-Maintainer: Tespent <me@tespent.cn>
-Description: Command Line Scripts for ZJU
+Maintainer: Azuk 443 <me@azuk.top>
+Description: Command Line Scripts for ZJU Campus Network
  This script provides a VPN / WLAN / NEXTHOP for ZJUer.
 EOF
 

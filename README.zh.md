@@ -39,8 +39,8 @@
 2. 依次输入并执行下列命令：
 
 ``` bash
-curl https://dl.zjuqsc.com/linux/qsc.public.key | sudo apt-key add -
-curl https://dl.zjuqsc.com/linux/debian/qsc.list | sudo tee /etc/apt/sources.list.d/qsc.list
+curl https://mirrors.zju.edu.cn/openzjunet/zjumirrors.pgp | sudo apt-key add -
+curl https://mirrors.zju.edu.cn/openzjunet/zjunet.list | sudo tee /etc/apt/sources.list.d/zjunet.list
 sudo apt-get update
 sudo apt-get install zjunet
 ```
@@ -59,9 +59,9 @@ sudo apt-get install zjunet
 3. 依次输入并执行下列命令：
 
 ```bash
-curl https://dl.zjuqsc.com/linux/qsc.public.key | sudo tee /etc/pki/rpm-gpg/RPM-GPG-KEY-QSC-COMP66
-curl https://dl.zjuqsc.com/linux/yum/qsc.repo | sudo tee /etc/yum.repos.d/qsc.repo
-sudo rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-QSC-COMP66
+curl https://mirrors.zju.edu.cn/openzjunet/zjumirrors.pgp | sudo tee /etc/pki/rpm-gpg/RPM-GPG-KEY-ZJUMIRRORS
+curl https://mirrors.zju.edu.cn/openzjunet/zjunet.repo | sudo tee /etc/yum.repos.d/zjunet.repo
+sudo rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-ZJUMIRRORS
 sudo yum install zjunet
 ```
 
