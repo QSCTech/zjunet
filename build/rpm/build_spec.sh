@@ -41,14 +41,10 @@ for f in *.sh; do
 done
 cd ..
 echo 'install -m 644 VERSION $RPM_BUILD_ROOT/usr/share/zjunet/VERSION' >> zjunet.spec
-echo 'install -m 644 qsc.public.key $RPM_BUILD_ROOT/usr/share/zjunet/qsc.public.key' >> zjunet.spec
-echo 'install -m 644 qsc.repo $RPM_BUILD_ROOT/usr/share/zjunet/qsc.repo' >> zjunet.spec
 echo "" >> zjunet.spec
 echo "%files" >> zjunet.spec
 echo "%defattr(-,root,root)" >> zjunet.spec
 echo "/usr/bin/zjunet" >> zjunet.spec
-echo "/usr/share/zjunet/qsc.public.key" >> zjunet.spec
-echo "/usr/share/zjunet/qsc.repo" >> zjunet.spec
 echo "/usr/share/zjunet/zjunet-postinst" >> zjunet.spec
 echo "/usr/share/zjunet/VERSION" >> zjunet.spec
 cd lib
