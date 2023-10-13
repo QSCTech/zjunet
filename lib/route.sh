@@ -49,6 +49,7 @@ if [ "${devs_count}" -eq "0" ]; then
     ip_route_del 210.32.160.0/21
     ip_route_del 210.32.168.0/22
     ip_route_del 210.32.172.0/23
+    ip_route_del 210.32.174.0/24
     ip_route_del 210.32.176.0/20
     ip_route_del 222.205.0.0/17
     ip_route_del 10.5.1.0/24
@@ -87,6 +88,7 @@ case "$gateway" in
         ip route replace 210.32.160.0/21 via $gateway
         ip route replace 210.32.168.0/22 via $gateway
         ip route replace 210.32.172.0/23 via $gateway
+        ip route replace 210.32.174.0/24 via $gateway
         ip route replace 210.32.176.0/20 via $gateway
         ip route replace 222.205.0.0/17 via $gateway
         ;;
