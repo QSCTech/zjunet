@@ -39,7 +39,7 @@
 2. 依次输入并执行下列命令：
 
 ``` bash
-curl https://mirrors.zju.edu.cn/openzjunet/zjumirrors.pgp | sudo apt-key add -
+curl https://mirrors.zju.edu.cn/openzjunet/zjumirrors.pgp | sudo tee /etc/apt/trusted.gpg.d/zjumirrors.asc
 curl https://mirrors.zju.edu.cn/openzjunet/zjunet.list | sudo tee /etc/apt/sources.list.d/zjunet.list
 sudo apt-get update
 sudo apt-get install zjunet
