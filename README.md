@@ -36,7 +36,7 @@ If you meet any problem during or after the installation, check Troubleshooting 
 2. Run these command.
 
 ``` bash
-curl https://mirrors.zju.edu.cn/openzjunet/zjumirrors.pgp | sudo apt-key add -
+curl https://mirrors.zju.edu.cn/openzjunet/zjumirrors.pgp | sudo tee /etc/apt/trusted.gpg.d/zjumirrors.asc
 curl https://mirrors.zju.edu.cn/openzjunet/zjunet.list | sudo tee /etc/apt/sources.list.d/zjunet.list
 sudo apt-get update
 sudo apt-get install zjunet
