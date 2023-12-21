@@ -3,6 +3,7 @@
 # zjunet.sh -- router for zjunet
 #
 # Copyright (C) 2014 Zeno Zeng <zenoofzeng@gmail.com>
+# Copyright (C) 2023 Azuk 443 <azukmm@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -64,10 +65,6 @@ Actions:
     vpn, v
         connect, -c      Connect VPN and set up ip route
         disconnect, -d   Disconnect VPN and reset ip route
-    wlan, w
-        connect, -c      Login ZJUWLAN using curl
-        disconnect, -d   Logout ZJUWLAN using curl
-        disable          Disable WLAN capability
     route, r             Set up static route
     dns [ip], d [ip]     Test and set up DNS Server (default: 10.10.0.21)
     version, -v          Display program version
@@ -76,7 +73,6 @@ Example:
     zjunet user add      Add a new user
     zjunet vpn -c        Connect VPN
     zjunet vpn -d        Disconnect VPN
-    zjunet wlan disable  Completely disable WLAN capatibility
 EOF
         ;;
 esac

@@ -20,8 +20,6 @@
 
 - xl2tpd
 
-- curl
-
 - `dig` （在不同平台的包不同）
 
 ## 安装
@@ -83,7 +81,7 @@ sudo yum install zjunet
 ### 其他 Linux (源代码安装)
 
 ```bash
-xl2tpd -v; curl -V; dig -v # 检查依赖命令的安装情况。这句命令将输出三个版本号。
+xl2tpd -v; dig -v # 检查依赖命令的安装情况。这句命令将输出三个版本号。
 # 在合适的目录下
 git clone https://github.com/QSCTech/zjunet.git
 cd zjunet
@@ -93,7 +91,7 @@ sudo ./install.sh
 ```
 
 **注意** 运行 `./install.sh` 时 **不会** 确认必要依赖是否已经安装。
-您应当先运行 `xl2tpd -v` 、 `curl -V` 和 `dig -v` 确认安装。
+您应当先运行 `xl2tpd -v` 、 `dig -v` 确认安装。
 
 ## 疑难解答
 

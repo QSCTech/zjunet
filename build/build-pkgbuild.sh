@@ -26,7 +26,7 @@ pkgdesc="Command Line Scripts for ZJU"
 url="https://github.com/QSCTech/$PKGNAME"
 arch=('any')
 license=('GPL')
-depends=('xl2tpd>=1.3.7' 'curl' 'dnsutils')
+depends=('xl2tpd>=1.3.7' 'dnsutils')
 source=("$PKGNAME-$PKGVER.tar.gz::https://github.com/QSCTech/$PKGNAME/archive/v$PKGVER.tar.gz")
 md5sums=('$FILE_MD5')
 sha1sums=('$FILE_SHA1')

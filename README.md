@@ -22,8 +22,6 @@ Command Line Scripts for ZJU (VPN / WLAN / DNS)
 
 - xl2tpd
 
-- curl
-
 - `dig` (Different package on different platform)
 
 ## Installation
@@ -80,7 +78,7 @@ Please complete installation before connecting to the intranet.
 ### Other Linux (Build from source code)
 
 ```bash
-xl2tpd -v; curl -V; dig -v # Check installation of dependencies. There should be 3 version numbers.
+xl2tpd -v; dig -v # Check installation of dependencies. There should be 3 version numbers.
 # Under proper directory
 git clone https://github.com/QSCTech/zjunet.git
 cd zjunet
@@ -90,7 +88,7 @@ sudo ./install.sh
 ```
 
 **ATTENTION** Requirement check will **NOT** be done running `./install.sh`.
-Please run `xl2tpd -v`, `curl -V` and `dig -v` to verify the installation.
+Please run `xl2tpd -v` and `dig -v` to verify the installation.
 
 ## Troubleshooting
 
