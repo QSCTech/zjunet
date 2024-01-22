@@ -20,6 +20,6 @@ EOF
 chmod +x $DESTDIR$PREFIX/bin/zjunet
 echo "[INFO] Done."
 echo
-if [[ -z $DESTDIR ]]; then
-	zjunet usage
+if [ -z $DESTDIR ]; then
+	 $DESTDIR$PREFIX/bin/zjunet usage
 fi
